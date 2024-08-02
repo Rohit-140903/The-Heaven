@@ -1,0 +1,52 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 70vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.message {
+    padding: 30px;
+    border-radius: 8px;
+    width: 500px;
+    height:200px;
+    
+}
+.success {
+    background-color: #ebf4ed;
+    color: #21c347;
+    border: 1px solid #c3e6cb;
+    
+}
+
+.success h1 {
+    margin: 0;
+    font-size: 2em;
+}
+
+.success p {
+    margin: 10px 0 0;
+    font-size: 1.2em;
+    color:black;
+}
+.btn{
+    padding:40px;
+    justify-content: center;
+    text-align: center;
+}
+.success-btn{
+    
+width:200px;
+height:40px;
+margin-left: -12px;
+border-radius: 20px;
+border: none;
+font-family: "Poppins";
+background-color: white;
+}
+.success-btn:hover{
+    background-color: #1af14c;
+}
+
+
