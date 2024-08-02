@@ -279,7 +279,7 @@ app.post('/create-checkout-session',async(req,res) => {
             currency: 'usd',
             product_data: {
                 name: item.name,
-                images: [item.image]
+                // images: [item.image]  // because stripe doesn't access private url for that we have to use public clouds
             },
             unit_amount: Math.round(item.new_price*100),
         },
