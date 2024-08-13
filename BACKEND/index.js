@@ -6,8 +6,8 @@ const jwt  = require('jsonwebtoken');
 const multer = require('multer');
 const path = require('path');
 const cors = require('cors');
-// const stripe = require('stripe')("sk_test_51PiX2iILieSR11SJzOYBvxyQb0cHlDxkS99fyLqnfs9x5G9xbxdcwO8ASH4UOc8GPeoAajHLWtbX2gW0JB1iGugn00GGUGujE8");
-const stripe=require('stripe')(process.env.STRIPE_SECRET);
+ //const stripe = require('stripe')("sk_test_51PiWzHKIoQkhF1oCFukLdoqZmNl0B2s38Sow2kX2hd8L26LFXDSHSq2smMZrWZxeBddO9AarprSSEjJrt4A8KzGX00iOTCKWJN");
+ const stripe=require('stripe')(process.env.STRIPE_SECRET);
 
 const port = process.env.PORT || 4000;
 
@@ -292,7 +292,7 @@ app.post('/create-checkout-session',async(req,res) => {
         payment_method_types:["card"],
         line_items:items,
         mode : "payment",
-        success_url : "http://localhost:5173/failure",
+        success_url : "http://localhost:5173/success",
         cancel_url:"http://localhost:5173/failure"
     });
 

@@ -15,7 +15,7 @@ const Failure = () => {
 
     return (
         <div className="container">
-            <div className="message success">
+            <div className="message failure">
                 <h1>Failed!</h1>
                 <p>some error occured during payment, choose one option below.</p>
                 <div className = "btn">
