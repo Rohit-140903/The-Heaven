@@ -6,8 +6,7 @@ const jwt  = require('jsonwebtoken');
 const multer = require('multer');
 const path = require('path');
 const cors = require('cors');
- //const stripe = require('stripe')("sk_test_51PiWzHKIoQkhF1oCFukLdoqZmNl0B2s38Sow2kX2hd8L26LFXDSHSq2smMZrWZxeBddO9AarprSSEjJrt4A8KzGX00iOTCKWJN");
- const stripe=require('stripe')(process.env.STRIPE_SECRET);
+const stripe=require('stripe')(process.env.STRIPE_SECRET);
 
 const port = process.env.PORT || 4000;
 
