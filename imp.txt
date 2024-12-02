@@ -1,1 +1,3 @@
 master is like a main branch -> imp
+backend = npm run dev
+frontend = npm run dev and for build = npm run build

@@ -40,7 +40,7 @@ const upload = multer({storage :storage})
 //creating Upload Endpoint for images
 app.use('/images',express.static('upload/images'));
 
-app.post('/upload',upload.single('product'),(req,res)=>{ // yahan per upload.single(var_name) wahi use krna hai key mein***
+app.post('/upload',upload.single('product'),(req,res)=>{ // yahan per upload.single(var_name) wahi use krna hai key mein*** and yahi se upload mein save ho ja raha hai
     res.json({
         success:1,
         image_url:`http://localhost:${port}/images/${req.file.filename}`
@@ -101,13 +101,14 @@ app.post('/addProduct', async(req,res)=>{
         // id : req.body.id,
         id : id,
         name : req.body.name,
-        image : req.body.image,
+        image : req.body.image, // it has the value which is stored in upload/image folder for that image
         category:req.body.category,
         new_price:req.body.new_price,
         old_price:req.body.old_price,
 
     });
     await product.save(); // saved in the database(Mongodb)
+    console.log(product.image);
     console.log("Save");
     res.json({
         success:true,
