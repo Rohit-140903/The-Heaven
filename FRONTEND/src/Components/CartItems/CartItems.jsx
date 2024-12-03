@@ -9,7 +9,8 @@ export default function CartItems () {
     const {all_product,cartItems,addToCart,removeFromCart,getTotalCartAmount} = useContext(ShopContext);
 
     const makePayment = async() =>{
-        // const stripe = await loadStripe ("pk_test_51PiX2iILieSR11SJn9VYclHp0iwqYi54iY2vH0IPu4DnV0bdw0OAJSkCUAdBHIQxtBJ6NSezj47S4hCsonBGQ0JZ00wdcuE2E1");
+        
+        try{
         const stripe=await loadStripe(import.meta.env.VITE_PUBLISHABLE_KEY);
         const body = {
             products : all_product,
@@ -22,17 +23,28 @@ export default function CartItems () {
             'Content-Type' : 'application/json'
         }
 
-        const resopnse = await fetch("http://localhost:4000/create-checkout-session",{
+        const response = await fetch("http://localhost:4000/create-checkout-session",{
             method : "POST",
             headers:headers,
             body:JSON.stringify(body),
         })
 
-        const session = await resopnse.json();
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || "Failed to create checkout session.");
+        }
+
+        const session = await response.json();
         const result = stripe.redirectToCheckout({
             sessionId : session.id,
         });
+    } // end of try block
+    catch(err){
+        alert(err.message);
     }
+}
+
+
 
 
     
