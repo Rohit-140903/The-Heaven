@@ -3,8 +3,8 @@
     flex-direction: column;
     padding-top: 30px;
     gap : 20px;
-    width:100%;
-    max-width: 250px;
+    width:20%;
+    max-width: 20%;
     height:110vh;
     background: white;
 }

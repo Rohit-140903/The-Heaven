@@ -1,0 +1,125 @@
+.Adminloginsignup{
+    width : 80%;
+    /* height : 100%; */
+    background : #fce3fe;
+    padding-top: 5%;
+    padding-left: 100px;
+    margin : 0px;
+    /* display: flex; */
+    
+}
+.Adminloginsignup-container{
+    width: 550px;
+    height: 470px;
+    background: white;
+    margin: auto;
+    padding : 100px 60px;
+    /* display:  flex;
+    align-items:  center;
+    justify-content: center; */
+}
+.Adminloginsignup-container h1{
+    margin : 20px 0px;
+}
+.Adminloginsignup-fields{
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    margin-top: 30px;
+}
+.Adminloginsignup-fields input{
+    height : 38px;
+    width : 90%;
+    padding-left : 20px;
+    border : 1px solid #c9c9c9;
+    outline : none;
+    color : #5c5c5c;
+    font-size: 18px;
+}
+.Adminloginsignup-container button{
+   width : 520px;
+   height : 50px;
+   color : white;
+   background : #3457D5; 
+   margin-top : 28px;
+   border : none;
+   border-radius: 10px;
+   font-size: 22px;
+   font-weight: 500;
+   cursor: pointer;
+}
+
+.Adminloginsignup-login{
+    margin-top : 20px;
+    color : #5c5c5c;
+    font-size: 18px;
+    font-weight: 500;
+}
+.Adminloginsignup-login span{
+    color:#0000FF;
+    font-weight: 600;
+    cursor: pointer;
+}
+.Adminloginsignup-agree{
+    display: flex;
+    align-items: center;
+    margin-top: 25px;
+    gap : 20px;
+    color : #5c5c5c;
+    font-size:18px;
+    font-weight: 500;
+}
+@media(max-width:1280px){
+    .Adminloginsignup{
+        padding-top: 50px;
+    }
+    .Adminloginsignup-container{
+        width:auto;
+        max-width: 480px;
+        max-height: 440px;
+    }
+    .Adminloginsignup-container h1{
+        margin:5px 0px;
+    }
+    .Adminloginsignup-fields{
+        gap:14px;
+        margin-top: 20px;
+    }
+    .Adminloginsignup-fields input{
+        height:55px;
+        width:85%;
+    }
+    .Adminloginsignup-container button{
+        width: 90%;
+        margin-left: 4px;
+    }
+    .Adminloginsignup-login{
+        font-size: 17px;
+        
+    }
+    .Adminloginsignup-agree{
+        font-size: 16px;
+        gap : 10px;
+    }
+}
+@media(max-width:800px){
+    .Adminloginsignup-container{
+        padding:20px 30px;
+    }
+    .Adminloginsignup-container h1{
+        font-size: 24px;
+    }
+    .Adminloginsignup-fields{
+        margin-top: 20px;
+    } 
+    .Adminloginsignup-fields input{
+        height:50px;
+    }
+    .Adminloginsignup-container button{
+        height:50px;
+        font-size:16px;
+    }
+    .Adminloginsignup-login{
+        text-align : left;
+    }
+}

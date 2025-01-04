@@ -18,17 +18,19 @@
 .nav-logo img{
     width: 80px;
     height : 80px;
+    margin-left: -30px;
 }
 .nav-profile p{
     font-size : 20px;
     color: red;
-    margin-left:-35px;
+    margin-left:780px;
     margin-top:2px;
     gap:5px;
 }
 .nav-profile img{
     margin-top:-20px;
     width:90px;
+    margin-left: 800px;
 }
 @media(max-width:800px){
     .navbar{
@@ -51,4 +53,20 @@
         width:70px;
         margin-left: -10px;;
     }
+}
+
+.Admin-nav-login button{
+    width : 100px;
+    height : 39px;
+    outline : none;
+    border : 1px solid #7a7a7a;
+    border-radius: 75px;
+    color : #515151;
+    font-size: 20px;
+    font-weight: 500;
+    background : white;
+    cursor: pointer;
+}
+.Admin-nav-login button :active{
+    background : #f3f3f3;
 }

@@ -27,7 +27,7 @@ export default function AddProduct() {
         let formData = new FormData();
         formData.append('product', image); // because as we use upload.single method ('product') that'why we'll append product then image no. or id
 
-        await fetch('http://localhost:4000/upload', {
+        await fetch('http://localhost:4000/home/upload', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -41,7 +41,7 @@ export default function AddProduct() {
         if (responseData.success) {
             product.image = responseData.image_url;
             console.log(product);
-            await fetch('http://localhost:4000/addProduct', {
+            await fetch('http://localhost:4000/home/addProduct', {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',

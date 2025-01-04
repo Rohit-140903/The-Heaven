@@ -29,6 +29,8 @@ export default function CartItems () {
             body:JSON.stringify(body),
         })
 
+        // response.ok == It returns true if the response's status code is in the range of 200–299 (successful HTTP responses)
+
         if (!response.ok) {
             const errorData = await response.json();
             throw new Error(errorData.error || "Failed to create checkout session.");

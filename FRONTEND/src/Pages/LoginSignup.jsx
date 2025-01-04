@@ -12,7 +12,7 @@ function LoginSignup (){
     })
 
     const login = async () =>{
-        console.log("Login Functin Executed Successfully",formData);
+        console.log("Login Function Executed Successfully",formData);
         let responseData;
         await fetch('http://localhost:4000/login',{
             method : 'POST',

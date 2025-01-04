@@ -1,11 +1,11 @@
-.admin{
+.home{
     display: -webkit-inline-flex;
-    background : #fce3fe;
     width : 100%;
 }
 
+
 @media(max-width:800px){
-    .admin{
+    .home{
         flex-direction: column;
     }
 }
