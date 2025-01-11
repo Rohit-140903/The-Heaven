@@ -12,8 +12,11 @@ const Admin = ()=>{
         <div className = "admin">
             <Routes>
                 <Route path='/Adminlogin' element = {<AdminLoginSignup />} />
-                <Route path='/home/*' element = {<Home />} /> 
-          
+                <Route path='*' element = {<Home />} /> 
+                {/* <Route path = '/home/*' element = {<Home />} />
+                // if we used this type then all routes are made like /home/addProduct and so on backend routes will be like this
+                // but this is not standard practises
+           */}
             </Routes>
         </div>
     )

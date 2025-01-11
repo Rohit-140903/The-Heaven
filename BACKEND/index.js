@@ -47,8 +47,16 @@ const upload = multer({ storage: storage });
 //creating Upload Endpoint for images
 app.use("/images", express.static("upload/images"));
 
-app.post("/home/upload", upload.single("product"), (req, res) => {
-  // yahan per upload.single(var_name) wahi use krna hai key mein*** and yahi se upload mein save ho ja raha hai
+app.post("/upload", upload.single("product"), (req, res) => {
+  // Check if file is provided
+  if (!req.file) {
+    return res.status(400).json({
+      success: 0,
+      message: "No file uploaded. please fill all the feilds properly",
+    });
+  }
+
+  // If file is uploaded, proceed
   res.json({
     success: 1,
     image_url: `http://localhost:${port}/images/${req.file.filename}`,
@@ -93,37 +101,60 @@ const Product = mongoose.model("Product", {
 
 //Creating api for adding the product onto the database 
 // admin page end point
-app.post("/home/addProduct", async (req, res) => {
-  //logic for not Providing the id in req
-  let products = await Product.find({}); // returns all the Products
-  let id;
-  if (products.length > 0) {
-    let last_product_inArray = products.slice(-1); // return the lastProduct in the database
-    let last_product = last_product_inArray[0];
-    id = last_product.id + 1;
-  } else {
-    id = 1;
+app.post("/addProduct", async (req, res) => {
+  // Validate required fields
+  const { name, image, category, new_price, old_price } = req.body;
+
+  if (!name || !image || !category || !new_price || !old_price) {
+    console.log("error");
+    return res.status(400).json({
+      success: false,
+      message: "All fields are required!",
+    });
   }
-  const product = new Product({
-    // id : req.body.id,
-    id: id,
-    name: req.body.name,
-    image: req.body.image, // it has the value which is stored in upload/image folder for that image
-    category: req.body.category,
-    new_price: req.body.new_price,
-    old_price: req.body.old_price,
-  });
-  await product.save(); // saved in the database(Mongodb)
-  console.log(product.image);
-  console.log("Save");
-  res.json({
-    success: true,
-    name: req.body.name,
-  });
+
+  try {
+    let products = await Product.find({}); // Retrieve all products
+    let id;
+
+    // Determine the new product ID
+    if (products.length > 0) {
+      let last_product = products.slice(-1)[0]; // Get the last product
+      id = last_product.id + 1;
+    } else {
+      id = 1; // Start ID from 1 if no products exist
+    }
+
+    // Create a new product
+    const product = new Product({
+      id: id,
+      name: name,
+      image: image, // Value stored in upload/image folder
+      category: category,
+      new_price: new_price,
+      old_price: old_price,
+    });
+
+    await product.save(); // Save the product in the database
+    console.log(product.image);
+    console.log("Saved");
+
+    // Return success response
+    res.json({
+      success: true,
+      name: name,
+    });
+  } catch (error) {
+    console.error("Error saving product:", error);
+    res.status(500).json({
+      success: false,
+      message: "An error occurred while saving the product.",
+    });
+  }
 });
 
 //creating api for removing the product from the database
-app.post("/home/removeProduct", async (req, res) => {
+app.post("/removeProduct", async (req, res) => {
   await Product.findOneAndDelete({ id: req.body.id });
   res.json({
     success: 1,
@@ -132,7 +163,7 @@ app.post("/home/removeProduct", async (req, res) => {
 });
 
 //creating api for getting all Products;
-app.get("/home/allProducts", async (req, res) => {
+app.get("/allProducts", async (req, res) => {
   const allProduct = await Product.find({});
   // console.log(allProduct);
   res.send(allProduct);

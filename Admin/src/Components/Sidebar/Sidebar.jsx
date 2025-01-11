@@ -8,14 +8,14 @@ import list_product_icon from '../../assets/Product_list_icon.svg';
 const Sidebar = ()=>{
     return(
         <div className = 'sidebar'>
-            <Link to = {'/home/addProduct'} style = {{textDecoration:"none"}}>
+            <Link to = {'/addProduct'} style = {{textDecoration:"none"}}>
             <div className = "sidebar-item">
                 <img src = {add_product_icon} alt = "" />
                 <p>Add Product</p>
             </div>
             </Link>
 
-            <Link to = {'/home/listProduct'} style = {{textDecoration:"none"}}>
+            <Link to = {'/listProduct'} style = {{textDecoration:"none"}}>
             <div className = "sidebar-item">
                 <img src = {list_product_icon} alt = "" />
                 <p>Product List</p>
