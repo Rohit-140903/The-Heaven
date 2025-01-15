@@ -8,6 +8,7 @@ const path = require("path");
 const cors = require("cors");
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
 
+
 const port = process.env.PORT || 4000;
 
 app.use(express.json());
@@ -240,7 +241,7 @@ app.post("/signup", async (req, res) => {
     },
   };
 
-  const token = jwt.sign(data, "secret_ecom"); // salting
+  const token = jwt.sign(data, process.env.SALT_KEY); // salting
   res.json({ success: true, token });
 });
 
@@ -289,7 +290,7 @@ app.post("/Adminsignup", async (req, res) => {
     },
   };
 
-  const token = jwt.sign(data, "secret_ecom"); // salting
+  const token = jwt.sign(data, process.env.SALT_KEY); // salting
   res.json({ success: true, token });
 });
 
@@ -304,7 +305,7 @@ app.post("/login", async (req, res) => {
           id: user.id,
         },
       };
-      const token = jwt.sign(data, "secret_ecom");
+      const token = jwt.sign(data, process.env.SALT_KEY);
       res.json({ success: true, token });
     } else {
       // if pass was incorrect
@@ -326,7 +327,7 @@ app.post("/Adminlogin", async (req, res) => {
           id: AdminUser.id,
         },
       };
-      const token = jwt.sign(data, "secret_ecom");
+      const token = jwt.sign(data, process.env.SALT_KEY);
       res.json({ success: true, token });
     } else {
       // if pass was incorrect

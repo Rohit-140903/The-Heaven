@@ -2,10 +2,4 @@ master is like a main branch -> imp
 backend = npm run dev
 frontend = npm run dev and for build = npm run build
 
-// to do : make authentication page for admin panel 
-
-using loginAdmin and signUpAdmin route and make pages in admin folder same as done for user 
-
-we can connect multiple sites using one backend and make sure there is no conflict in routes
-
-create one database for admin and length should be one else throw err 
+todo : make authentication page in admin dashboard with only one admin account

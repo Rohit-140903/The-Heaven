@@ -74,7 +74,7 @@ export default function AddProduct() {
           }
         });
     } else {
-      console.log("Failed");
+      alert("Failed");
     }
   };
 

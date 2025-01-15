@@ -56,7 +56,7 @@ const addToCart = (itemId)=>{
  
 const removeFromCart = (itemId)=>{
   setcartItems((prev)=>({...prev,[itemId]:prev[itemId]-1}));
-  if(localStorage.getItem('auth-token')){ // if the user is login  in that case auth-token will be generated
+  if(localStorage.getItem('auth-token')){ // if the user is login in that case auth-token will be generated
   fetch('http://localhost:4000/removefromcart',{
     method:'POST',
     headers:{
