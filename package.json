@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "appwrite": "^16.1.0",
+    "cross-env": "^7.0.3"
+  }
+}

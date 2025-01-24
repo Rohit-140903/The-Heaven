@@ -9,6 +9,7 @@ const cors = require("cors");
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
 
 
+
 const port = process.env.PORT || 4000;
 
 app.use(express.json());
@@ -107,7 +108,7 @@ app.post("/addProduct", async (req, res) => {
   const { name, image, category, new_price, old_price } = req.body;
 
   if (!name || !image || !category || !new_price || !old_price) {
-    console.log("error");
+    console.log("error in adding Product");
     return res.status(400).json({
       success: false,
       message: "All fields are required!",

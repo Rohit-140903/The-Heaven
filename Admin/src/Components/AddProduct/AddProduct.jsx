@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./AddProduct.css";
 import upload_area from "../../assets/upload_area.svg";
-//import { UNSAFE_FetchersContext } from 'react-router-dom';
 
 export default function AddProduct() {
   const [image, setImage] = useState(false);
@@ -12,21 +11,40 @@ export default function AddProduct() {
     new_price: "",
     old_price: "",
   });
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    // Check if token is present in localStorage when component mounts
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsAuthenticated(true); // Set to true if token exists
+    } else {
+      setIsAuthenticated(false); // Set to false if no token
+    }
+  }, []);
+
   const imageHandler = (e) => {
-    setImage(e.target.files[0]); // set the image with it's file address which is in our diskstorage
+    setImage(e.target.files[0]);
   };
 
   const changeHandler = (e) => {
     setProductDetails({ ...productDetails, [e.target.name]: e.target.value });
   };
+
   const Add_Product = async () => {
+    if (!isAuthenticated) {
+      alert("Please log in first.");
+      return; // Stop the function execution if not authenticated
+    }
+
     console.log(productDetails);
     let responseData;
     let product = productDetails;
 
     let formData = new FormData();
-    formData.append("product", image); // because as we use upload.single method ('product') that'why we'll append product then image no. or id
+    formData.append("product", image); // Append image to formData
 
+    // Upload the image
     await fetch("http://localhost:4000/upload", {
       method: "POST",
       headers: {
@@ -36,18 +54,15 @@ export default function AddProduct() {
     })
       .then((res) => res.json())
       .then((data) => {
-        if(data.success){
-            responseData = data;
-        }else{
-            alert(data.message);
+        if (data.success) {
+          responseData = data;
+        } else {
+          alert(data.message);
         }
       });
 
-    console.log(responseData.success);
-    // .success is built in attribute which return 0 | 1
     if (responseData.success) {
       product.image = responseData.image_url;
-      console.log(product);
       await fetch("http://localhost:4000/addProduct", {
         method: "POST",
         headers: {
@@ -74,12 +89,17 @@ export default function AddProduct() {
           }
         });
     } else {
-      alert("Failed");
+      alert("Failed to upload image.");
     }
   };
 
   return (
     <div className="addproduct">
+      {!isAuthenticated && (
+        <div className="alert-message">
+          <p>You need to be logged in to add a product.</p>
+        </div>
+      )}
       <div className="addproduct-itemfield">
         <p>Product Title</p>
         <input
@@ -124,21 +144,14 @@ export default function AddProduct() {
           <option value="men">Men</option>
           <option value="kid">Kid</option>
         </select>
-
-        {/* {productDetails.category === "women" ? ( 
-                    <input value="xyz" name="add on " type="text" placeholder='type here' />
-                ) : null} */}
-
-        {/* conditional statement for add extra input boxes as per requirement  */}
       </div>
       <div className="addproduct-itemfeild">
         <label htmlFor="file-input">
           <img
             src={image ? URL.createObjectURL(image) : upload_area}
             className="addproduct-thumbnail-img"
-            alt=""
+            alt="upload"
           />
-          {/* conditional statement hai if image === true then URL ... or upload_area */}
         </label>
         <input
           onChange={imageHandler}
