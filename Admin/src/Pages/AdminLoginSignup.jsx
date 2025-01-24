@@ -1,5 +1,3 @@
-// 679335090002ecca92ef
-
 import React, { useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import "./AdminLoginSignup.css";
@@ -19,10 +17,39 @@ function AdminLoginSignup() {
     email: "",
     password: "",
   });
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
+  // Email validation function
+  const validateEmail = (email) => {
+    const emailParts = email.split("@");
+
+    if (emailParts.length !== 2) {
+      setError("Enter a valid email address");
+      return false;
+    }
+
+    const domain = emailParts[1];
+    const validDomains = [
+      "gmail.com",
+      "yahoo.com",
+      "outlook.com",
+      "hotmail.com",
+    ];
+
+    if (!validDomains.includes(domain)) {
+      setError("Enter a valid email domain (e.g., gmail.com, yahoo.com)");
+      return false;
+    }
+
+    setError(""); // Clear any previous error
+    return true;
+  };
+
   const login = async () => {
+    if (!validateEmail(formData.email)) return; // Validate email before proceeding
+
     let responseData;
     await fetch("http://localhost:4000/Adminlogin", {
       method: "POST",
@@ -36,9 +63,11 @@ function AdminLoginSignup() {
       .then((data) => (responseData = data));
 
     if (responseData.success) {
-      localStorage.setItem(String(import.meta.env.VITE_AUTH_TOKEN), responseData.token); // auth-token is key name of the token value
+      localStorage.setItem(
+        String(import.meta.env.VITE_AUTH_TOKEN),
+        responseData.token
+      ); // auth-token is key name of the token value
       setSideBarStatus(true); // Show sidebar
-      // After successful signup, trigger Appwrite Magic URL
       sendMagicLink();
     } else {
       alert(responseData.errors);
@@ -46,7 +75,8 @@ function AdminLoginSignup() {
   };
 
   const signup = async () => {
-    //console.log("Sign Up Function Executed Successfully", formData);
+    if (!validateEmail(formData.email)) return; // Validate email before proceeding
+
     let responseData;
     await fetch("http://localhost:4000/Adminsignup", {
       method: "POST",
@@ -60,9 +90,11 @@ function AdminLoginSignup() {
       .then((data) => (responseData = data));
 
     if (responseData.success) {
-      localStorage.setItem(String(import.meta.env.VITE_AUTH_TOKEN), responseData.token); // auth-token is key name of the token value
+      localStorage.setItem(
+        String(import.meta.env.VITE_AUTH_TOKEN),
+        responseData.token
+      ); // auth-token is key name of the token value
       setSideBarStatus(true); // Show sidebar
-      // After successful signup, trigger Appwrite Magic URL
       sendMagicLink();
     } else {
       alert(responseData.errors);
@@ -75,7 +107,6 @@ function AdminLoginSignup() {
 
   const sendMagicLink = async () => {
     try {
-      // alert("Magic URL sent! Please check your email.");
       const response = await account.createMagicURLToken(
         ID.unique(), // Generate a unique ID for the magic URL
         formData.email, // Email address for the magic URL
@@ -109,6 +140,11 @@ function AdminLoginSignup() {
             onChange={changeHandler}
             placeholder="Email Address"
           />
+          {error && (
+            <p style={{ color: "red", fontSize: "17px", marginTop: "-20px" }}>
+              {error}
+            </p>
+          )}
           <input
             type="password"
             name="password"

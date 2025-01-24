@@ -9,16 +9,56 @@ function LoginSignup() {
         email: "",
         password: ""
     });
+    const [error, setError] = useState(""); // To store error message
 
     // Initialize Appwrite Client
     const client = new Client()
         .setEndpoint(String(import.meta.env.VITE_APPWRITE_ENDPOINT)) // Replace with your Appwrite endpoint
-        .setProject(String(import.meta.env.VITE_APPWRITE_PROJECT_ID));                 // Replace with your Appwrite Project ID
+        .setProject(String(import.meta.env.VITE_APPWRITE_PROJECT_ID)); // Replace with your Appwrite Project ID
 
     const account = new Account(client);
 
+    // Email validation function
+    const validateEmail = (email) => {
+        console.log("Validating email:", email);
+    
+        // Split the email by '@' symbol
+        const emailParts = email.split('@');
+    
+        // Check if the email contains exactly two parts (local part and domain)
+        if (emailParts.length !== 2) {
+            setError("Enter a valid email address");
+            console.log("Email must contain exactly one '@' symbol.");
+            return false;
+        }
+    
+        const domain = emailParts[1];
+    
+        // Define a list of valid domains
+        const validDomains = ["gmail.com", "yahoo.com", "outlook.com", "hotmail.com"];
+    
+        // Check if the domain matches a valid domain
+        if (!validDomains.includes(domain)) {
+            setError("Enter a valid email domain (e.g., gmail.com, yahoo.com)");
+            console.log("Invalid domain:", domain);
+            return false;
+        }
+    
+        setError(""); // Clear any previous error
+        console.log("Email domain is valid");
+        return true;
+    };
+    
+
     const login = async () => {
         console.log("Login Function Executed Successfully", formData);
+
+        // Validate email before proceeding
+        if (!validateEmail(formData.email)) {
+            console.log(error);
+            return;
+        }
+
         let responseData;
         await fetch('http://localhost:4000/login', {
             method: 'POST',
@@ -42,6 +82,10 @@ function LoginSignup() {
 
     const signup = async () => {
         console.log("Sign Up Function Executed Successfully", formData);
+
+        // Validate email before proceeding
+        if (!validateEmail(formData.email)) return;
+
         let responseData;
         await fetch('http://localhost:4000/signup', {
             method: 'POST',
@@ -89,8 +133,23 @@ function LoginSignup() {
                     {state === "Sign Up" ? (
                         <input type="text" name="name" value={formData.name} onChange={changeHandler} placeholder="Your Name" />
                     ) : null}
-                    <input type="text" name="email" value={formData.email} onChange={changeHandler} placeholder="Email Address" />
-                    <input type="password" name="password" value={formData.password} onChange={changeHandler} placeholder="Password" />
+                    <div>
+                        <input 
+                            type="text" 
+                            name="email" 
+                            value={formData.email} 
+                            onChange={changeHandler} 
+                            placeholder="Email Address" 
+                        />
+                        {error && <p style={{ color: 'red', fontSize: '17px' }}>{error}</p>}
+                    </div>
+                    <input 
+                        type="password" 
+                        name="password" 
+                        value={formData.password} 
+                        onChange={changeHandler} 
+                        placeholder="Password" 
+                    />
                 </div>
                 <button onClick={() => { state === "Sign Up" ? signup() : login() }}>Continue</button>
                 {state === "Sign Up" ? (
