@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Client, Account, ID } from "appwrite"; // Import Appwrite SDK
+import { Client, Account, ID } from "appwrite"; 
 import './CSS/LoginSignup.css';
 
 function LoginSignup() {
@@ -9,55 +9,31 @@ function LoginSignup() {
         email: "",
         password: ""
     });
-    const [error, setError] = useState(""); // To store error message
+    const [error, setError] = useState({ 
+        email: "", password: "" 
+    }); 
+    const [loading, setLoading] = useState(false); // Loading state
 
-    // Initialize Appwrite Client
     const client = new Client()
-        .setEndpoint(String(import.meta.env.VITE_APPWRITE_ENDPOINT)) // Replace with your Appwrite endpoint
-        .setProject(String(import.meta.env.VITE_APPWRITE_PROJECT_ID)); // Replace with your Appwrite Project ID
+        .setEndpoint(String(import.meta.env.VITE_APPWRITE_ENDPOINT)) 
+        .setProject(String(import.meta.env.VITE_APPWRITE_PROJECT_ID));
 
     const account = new Account(client);
 
-    // Email validation function
     const validateEmail = (email) => {
-        console.log("Validating email:", email);
-    
-        // Split the email by '@' symbol
-        const emailParts = email.split('@');
-    
-        // Check if the email contains exactly two parts (local part and domain)
-        if (emailParts.length !== 2) {
-            setError("Enter a valid email address");
-            console.log("Email must contain exactly one '@' symbol.");
+        const regex = /^[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com|outlook\.com|hotmail\.com)$/;
+        if (!regex.test(email)) {
+            setError((prev) => ({ ...prev, email: "Please enter a valid email with a supported domain (gmail.com, yahoo.com, etc.)" }));
             return false;
         }
-    
-        const domain = emailParts[1];
-    
-        // Define a list of valid domains
-        const validDomains = ["gmail.com", "yahoo.com", "outlook.com", "hotmail.com"];
-    
-        // Check if the domain matches a valid domain
-        if (!validDomains.includes(domain)) {
-            setError("Enter a valid email domain (e.g., gmail.com, yahoo.com)");
-            console.log("Invalid domain:", domain);
-            return false;
-        }
-    
-        setError(""); // Clear any previous error
-        console.log("Email domain is valid");
+        setError((prev) => ({ ...prev, email: "" }));
         return true;
     };
-    
 
     const login = async () => {
-        console.log("Login Function Executed Successfully", formData);
+        if (!validateEmail(formData.email)) return;
 
-        // Validate email before proceeding
-        if (!validateEmail(formData.email)) {
-            console.log(error);
-            return;
-        }
+        setLoading(true); // Show loading indicator
 
         let responseData;
         await fetch('http://localhost:4000/login', {
@@ -68,23 +44,27 @@ function LoginSignup() {
             },
             body: JSON.stringify(formData),
         })
-            .then((res) => res.json())
-            .then((data) => responseData = data);
+        .then((res) => res.json())
+        .then((data) => responseData = data)
+        .catch((err) => {
+            setLoading(false);
+            console.error(err);
+            setError((prev) => ({ ...prev, password: "Login failed. Please try again." }));
+        });
 
-        if (responseData.success) {
-            localStorage.setItem(String(import.meta.env.VITE_AUTH_TOKEN), responseData.token); // Save JWT token
-            // After JWT verification, trigger Appwrite Magic URL
+        if (responseData?.success) {
+            localStorage.setItem(String(import.meta.env.VITE_AUTH_TOKEN), responseData.token); 
             sendMagicLink();
         } else {
-            alert(responseData.errors);
+            setLoading(false);
+            setError((prev) => ({ ...prev, password: "Wrong password or email. Please try again." }));
         }
     };
 
     const signup = async () => {
-        console.log("Sign Up Function Executed Successfully", formData);
-
-        // Validate email before proceeding
         if (!validateEmail(formData.email)) return;
+
+        setLoading(true); 
 
         let responseData;
         await fetch('http://localhost:4000/signup', {
@@ -95,24 +75,29 @@ function LoginSignup() {
             },
             body: JSON.stringify(formData),
         })
-            .then((res) => res.json())
-            .then((data) => responseData = data);
+        .then((res) => res.json())
+        .then((data) => responseData = data)
+        .catch((err) => {
+            setLoading(false);
+            console.error(err);
+            setError((prev) => ({ ...prev, password: "Sign-up failed. Please try again." }));
+        });
 
-        if (responseData.success) {
-            localStorage.setItem(String(import.meta.env.VITE_AUTH_TOKEN), responseData.token); // Save JWT token
-            // After successful signup, trigger Appwrite Magic URL
+        if (responseData?.success) {
+            localStorage.setItem(String(import.meta.env.VITE_AUTH_TOKEN), responseData.token); 
             sendMagicLink();
         } else {
-            alert(responseData.errors);
+            setLoading(false);
+            setError((prev) => ({ ...prev, password: "An unexpected error occurred. Please try again." }));
         }
     };
 
     const sendMagicLink = async () => {
         try {
             const response = await account.createMagicURLToken(
-                ID.unique(), // Generate a unique ID for the magic URL
-                formData.email, // Email address for the magic URL
-                'http://localhost:5173' // Redirect to the home route
+                ID.unique(),
+                formData.email, 
+                'http://localhost:5173' 
             );
             alert("Magic URL sent! Please check your email.");
         } catch (err) {
@@ -130,9 +115,9 @@ function LoginSignup() {
             <div className="loginsignup-container">
                 <h1>{state}</h1>
                 <div className="loginsignup-fields">
-                    {state === "Sign Up" ? (
+                    {state === "Sign Up" && (
                         <input type="text" name="name" value={formData.name} onChange={changeHandler} placeholder="Your Name" />
-                    ) : null}
+                    )}
                     <div>
                         <input 
                             type="text" 
@@ -141,17 +126,22 @@ function LoginSignup() {
                             onChange={changeHandler} 
                             placeholder="Email Address" 
                         />
-                        {error && <p style={{ color: 'red', fontSize: '17px' }}>{error}</p>}
+                        {error.email && <p style={{ color: 'red', fontSize: '17px' }}>{error.email}</p>}
                     </div>
-                    <input 
-                        type="password" 
-                        name="password" 
-                        value={formData.password} 
-                        onChange={changeHandler} 
-                        placeholder="Password" 
-                    />
+                    <div>
+                        <input 
+                            type="password" 
+                            name="password" 
+                            value={formData.password} 
+                            onChange={changeHandler} 
+                            placeholder="Password" 
+                        />
+                        {error.password && <p style={{ color: 'red', fontSize: '17px' }}>{error.password}</p>}
+                    </div>
                 </div>
-                <button onClick={() => { state === "Sign Up" ? signup() : login() }}>Continue</button>
+                <button onClick={() => { state === "Sign Up" ? signup() : login() }} disabled={loading}>
+                    {loading ? "Loading..." : "Continue"}
+                </button>
                 {state === "Sign Up" ? (
                     <p className="loginsignup-login">
                         Already have an account? <span onClick={() => { setState("Login") }}>Login here</span>

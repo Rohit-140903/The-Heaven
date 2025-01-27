@@ -1,31 +1,52 @@
 import React, { useEffect, useState } from "react";
 import './Popular.css';
-// import data_product from '../Assets/data';
 import Items from "../Items/Items";
 
-function Popular(){
+function Popular() {
+  const [popularItem, setPopularItem] = useState([]);
+  const [loading, setLoading] = useState(true); // Loading state
 
-    const [popularItem,setPopularItem] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true); // Start loading spinner
+      try {
+        const response = await fetch('http://localhost:4000/popularinwomen');
+        const data = await response.json();
+        setPopularItem(data);
+      } catch (error) {
+        console.error("Error fetching popular items:", error);
+      } finally {
+        setLoading(false); // Stop loading spinner
+      }
+    };
 
-    useEffect(()=>{
-        fetch('http://localhost:4000/popularinwomen')
-        .then((res) => res.json())
-        .then((data)=>setPopularItem(data))
-    },[]);
+    fetchData();
+  }, []);
 
-    return(
-        <div className = 'popular'>
-            <h1>POPULAR IN WOMEN</h1>
-            <hr />
-            <div className = "popular-item">
-                {popularItem.map((item,i) =>{
-                    return <Items key = {i} id = {item.id} name = {item.name} image = {item.image} new_price = {item.new_price} old_price = {item.old_price} />
-                }
-            )}
-            </div>
-
+  return (
+    <div className="popular">
+      <h1>POPULAR IN WOMEN</h1>
+      <hr />
+      {loading ? (
+        <div className="loading-spinner-overlay">
+          <div className="loading-spinner"></div>
         </div>
-    )
+      ) : (
+        <div className="popular-item">
+          {popularItem.map((item) => (
+            <Items
+              key={item.image_public_id}
+              id={item.image_public_id}
+              name={item.name}
+              image={item.image}
+              new_price={item.new_price}
+              old_price={item.old_price}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
 }
 
-export default Popular
+export default Popular;

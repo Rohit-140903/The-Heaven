@@ -18,6 +18,7 @@ function AdminLoginSignup() {
     password: "",
   });
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false); // Manage loading state
 
   const navigate = useNavigate();
 
@@ -50,6 +51,8 @@ function AdminLoginSignup() {
   const login = async () => {
     if (!validateEmail(formData.email)) return; // Validate email before proceeding
 
+    setLoading(true); // Start loading spinner
+
     let responseData;
     await fetch("http://localhost:4000/Adminlogin", {
       method: "POST",
@@ -72,10 +75,14 @@ function AdminLoginSignup() {
     } else {
       alert(responseData.errors);
     }
+
+    setLoading(false); // Stop loading spinner
   };
 
   const signup = async () => {
     if (!validateEmail(formData.email)) return; // Validate email before proceeding
+
+    setLoading(true); // Start loading spinner
 
     let responseData;
     await fetch("http://localhost:4000/Adminsignup", {
@@ -99,6 +106,8 @@ function AdminLoginSignup() {
     } else {
       alert(responseData.errors);
     }
+
+    setLoading(false); // Stop loading spinner
   };
 
   const changeHandler = (e) => {
@@ -172,6 +181,13 @@ function AdminLoginSignup() {
           <p>By continuing, I agree to the terms of use & privacy policy.</p>
         </div>
       </div>
+
+      {/* Loading spinner */}
+      {loading && (
+        <div className="loading-spinner-container">
+          <div className="loading-spinner"></div>
+        </div>
+      )}
     </div>
   );
 }

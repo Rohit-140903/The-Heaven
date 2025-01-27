@@ -3,7 +3,7 @@ import "./AddProduct.css";
 import upload_area from "../../assets/upload_area.svg";
 
 export default function AddProduct() {
-  const [image, setImage] = useState(false);
+  const [image, setImage] = useState(null);
   const [productDetails, setProductDetails] = useState({
     name: "",
     image: "",
@@ -12,14 +12,15 @@ export default function AddProduct() {
     old_price: "",
   });
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(false); // Loading state
 
   useEffect(() => {
-    // Check if token is present in localStorage when component mounts
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem(String(import.meta.env.VITE_AUTH_TOKEN));
     if (token) {
-      setIsAuthenticated(true); // Set to true if token exists
+      setIsAuthenticated(true);
     } else {
-      setIsAuthenticated(false); // Set to false if no token
+      setIsAuthenticated(false);
+      alert("Please log in first.");
     }
   }, []);
 
@@ -31,65 +32,77 @@ export default function AddProduct() {
     setProductDetails({ ...productDetails, [e.target.name]: e.target.value });
   };
 
+  const validateProduct = () => {
+    if (!productDetails.name || !productDetails.new_price || !productDetails.old_price || !image) {
+      alert("Please fill all fields and upload an image.");
+      return false;
+    }
+    return true;
+  };
+
   const Add_Product = async () => {
     if (!isAuthenticated) {
       alert("Please log in first.");
-      return; // Stop the function execution if not authenticated
+      return;
     }
 
-    console.log(productDetails);
-    let responseData;
-    let product = productDetails;
+    if (!validateProduct()) {
+      return;
+    }
 
-    let formData = new FormData();
-    formData.append("product", image); // Append image to formData
+    setLoading(true); // Start loading
 
-    // Upload the image
-    await fetch("http://localhost:4000/upload", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-      },
-      body: formData,
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.success) {
-          responseData = data;
-        } else {
-          alert(data.message);
-        }
-      });
+    try {
+      const formData = new FormData();
+      formData.append("product", image);
 
-    if (responseData.success) {
-      product.image = responseData.image_url;
-      await fetch("http://localhost:4000/addProduct", {
+      const uploadResponse = await fetch("http://localhost:4000/upload", {
         method: "POST",
         headers: {
           Accept: "application/json",
-          "Content-Type": "application/json",
         },
-        body: JSON.stringify(product),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.success) {
-            alert("Product Added");
-            // Reset the form fields
-            setProductDetails({
-              name: "",
-              image: "",
-              category: "women",
-              new_price: "",
-              old_price: "",
-            });
-            setImage(false);
-          } else {
-            alert(data.message);
-          }
+        body: formData,
+      });
+      const uploadData = await uploadResponse.json();
+
+      if (uploadData.success) {
+        const updatedProductDetails = {
+          ...productDetails,
+          image: uploadData.imageUrl,
+          image_public_id: uploadData.imagePublicId,
+        };
+
+        const productResponse = await fetch("http://localhost:4000/addProduct", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedProductDetails),
         });
-    } else {
-      alert("Failed to upload image.");
+        const productData = await productResponse.json();
+
+        if (productData.success) {
+          alert("Product Added Successfully!");
+          setProductDetails({
+            name: "",
+            image: "",
+            category: "women",
+            new_price: "",
+            old_price: "",
+          });
+          setImage(null);
+        } else {
+          alert(productData.message);
+        }
+      } else {
+        alert("Failed to upload image.");
+      }
+    } catch (error) {
+      console.error("Error during image upload or product creation:", error);
+      alert("An error occurred. Please try again.");
+    } finally {
+      setLoading(false); // End loading
     }
   };
 
@@ -100,6 +113,13 @@ export default function AddProduct() {
           <p>You need to be logged in to add a product.</p>
         </div>
       )}
+
+      {loading && (
+        <div className="loading-spinner-overlay">
+          <div className="loading-spinner"></div>
+        </div>
+      )}
+
       <div className="addproduct-itemfield">
         <p>Product Title</p>
         <input
@@ -110,6 +130,7 @@ export default function AddProduct() {
           placeholder="Type here"
         />
       </div>
+
       <div className="addproduct-price">
         <div className="addproduct-itemfield">
           <p>Price</p>
@@ -132,6 +153,7 @@ export default function AddProduct() {
           />
         </div>
       </div>
+
       <div className="addproduct-itemfield">
         <p>Product Category</p>
         <select
@@ -145,6 +167,7 @@ export default function AddProduct() {
           <option value="kid">Kid</option>
         </select>
       </div>
+
       <div className="addproduct-itemfeild">
         <label htmlFor="file-input">
           <img
@@ -161,8 +184,9 @@ export default function AddProduct() {
           hidden
         />
       </div>
-      <button onClick={Add_Product} className="addproduct-btn">
-        ADD
+
+      <button onClick={Add_Product} className="addproduct-btn" disabled={loading}>
+        {loading ? "Adding..." : "ADD"}
       </button>
     </div>
   );

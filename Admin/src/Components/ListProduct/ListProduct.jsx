@@ -3,12 +3,12 @@ import './ListProduct.css';
 import remove_icon from '../../assets/remove_icon.png';
 
 export default function ListProduct() {
-
   const [allproducts, setAllProducts] = useState([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(false); // Loading state
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem(String(import.meta.env.VITE_AUTH_TOKEN));
     if (token) {
       setIsAuthenticated(true);
       fetchInfo(); // Fetch products only if authenticated
@@ -19,21 +19,35 @@ export default function ListProduct() {
   }, []);
 
   const fetchInfo = async () => {
-    await fetch('http://localhost:4000/allProducts')
-      .then((res) => res.json())
-      .then((data) => { setAllProducts(data) });
+    setLoading(true); // Start loading
+    try {
+      const res = await fetch('http://localhost:4000/allProducts');
+      const data = await res.json();
+      setAllProducts(data);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    } finally {
+      setLoading(false); // End loading
+    }
   };
 
   const remove_product = async (id) => {
-    await fetch('http://localhost:4000/removeProduct', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ id: id })
-    });
-    fetchInfo(); // Refresh product list after removal
+    setLoading(true); // Start loading
+    try {
+      await fetch('http://localhost:4000/removeProduct', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id: id }),
+      });
+      fetchInfo(); // Refresh product list after removal
+    } catch (error) {
+      console.error("Error removing product:", error);
+    } finally {
+      setLoading(false); // End loading
+    }
   };
 
   if (!isAuthenticated) {
@@ -42,6 +56,12 @@ export default function ListProduct() {
 
   return (
     <div className='list-product'>
+      {loading && (
+        <div className="loading-spinner-overlay">
+          <div className="loading-spinner"></div>
+        </div>
+      )}
+
       <h1>All Products</h1>
       <div className="listproduct-format-main">
         <p>Products</p>
@@ -55,17 +75,22 @@ export default function ListProduct() {
         <hr />
         {allproducts.map((product, index) => {
           return (
-            <>
-              <div key={index} className='listproduct-format-main listproduct-format'>
+            <div key={index}>
+              <div className='listproduct-format-main listproduct-format'>
                 <img src={product.image} alt="" className='listproduct-product-icon' />
                 <p>{product.name}</p>
                 <p>${product.old_price}</p>
                 <p>${product.new_price}</p>
                 <p>{product.category}</p>
-                <img onClick={() => { remove_product(product.id) }} className='listproduct-remove-icon' src={remove_icon} alt="" />
+                <img 
+                  onClick={() => remove_product(product.image_public_id)} 
+                  className='listproduct-remove-icon' 
+                  src={remove_icon} 
+                  alt="Remove" 
+                />
               </div>
               <hr />
-            </>
+            </div>
           );
         })}
       </div>
