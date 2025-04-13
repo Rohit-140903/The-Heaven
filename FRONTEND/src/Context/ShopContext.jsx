@@ -64,22 +64,55 @@ const addToCart = (itemId)=>{
   }
 }
  
-const removeFromCart = (itemId)=>{
-  setcartItems((prev)=>({...prev,[itemId]:prev[itemId]-1}));
-  if(localStorage.getItem('auth-token')){ // if the user is login in that case auth-token will be generated
-  fetch('http://localhost:4000/removefromcart',{
-    method:'POST',
-    headers:{
-      Accept:'application/form-data',
-      'auth-token' : `${localStorage.getItem('auth-token')}`,
-      'Content-Type' : 'application/json',
-    },
-    body:JSON.stringify({"itemId":itemId}),
-  })
-  .then((res) => res.json())
-  .then((data) => setAll_Product(data));
+// const removeFromCart = (itemId)=>{
+//   setcartItems((prev)=>({...prev,[itemId]:prev[itemId]-1}));
+//   if(localStorage.getItem('auth-token')){ // if the user is login in that case auth-token will be generated
+//   fetch('http://localhost:4000/removefromcart',{
+//     method:'POST',
+//     headers:{
+//       Accept:'application/form-data',
+//       'auth-token' : `${localStorage.getItem('auth-token')}`,
+//       'Content-Type' : 'application/json',
+//     },
+//     body:JSON.stringify({"itemId":itemId}),
+//   })
+//   .then((res) => res.json())
+//   .then((data) => setAll_Product(data));
+//   }
+// }
+
+const removeFromCart = (itemId) => {
+  setcartItems((prev) => {
+    if (!prev[itemId] || prev[itemId] <= 1) { 
+      const updatedCart = { ...prev };
+      delete updatedCart[itemId]; // ✅ Remove item completely if count is 0
+      return updatedCart;
+    }
+    return { ...prev, [itemId]: prev[itemId] - 1 };
+  });
+
+  if (localStorage.getItem("auth-token")) {
+    fetch("http://localhost:4000/removefromcart", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",  // ✅ Corrected header
+        "auth-token": localStorage.getItem("auth-token"),
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ itemId }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success && data.cart) {
+          setcartItems(data.cart);  // ✅ Update cartItems, not all_product
+        } else {
+          console.error("Unexpected API response format:", data);
+        }
+      })
+      .catch((err) => console.error("Error updating cart:", err)); // ✅ Catch API errors
   }
-}
+};
+
 
 
 const getTotalCartAmount = () => {

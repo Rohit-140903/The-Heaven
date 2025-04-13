@@ -172,10 +172,10 @@ function Navbar() {
                   </button>
                 </div>
               ) : (
-                <>
-                  <Link to="/login">Login</Link>
-                  <Link to="/signup">Sign Up</Link>
-                </>
+                <div className="no-user">
+                  <Link to="/login"><strong>Login</strong></Link>
+                  <Link to="/signup"><strong>Sign Up</strong></Link>
+                </div>
               )}
             </div>
           )}

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { Client, Account } from "appwrite";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
-import "./CSS/ResetPassword.css"; // Import external CSS
+import "./CSS/ResetPassword.css"; 
 
 const client = new Client()
   .setEndpoint(import.meta.env.VITE_APPWRITE_ENDPOINT)
@@ -48,6 +48,8 @@ function ResetPassword() {
   }, []);
 
   const handleResetPassword = async () => {
+    console.log(userId);
+    console.log(secret);
     if (password !== confirmPassword) {
       setError("Passwords do not match!");
       return;
