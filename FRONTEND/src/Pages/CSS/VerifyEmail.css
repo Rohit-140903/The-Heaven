@@ -1,0 +1,64 @@
+.verify-email-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f4f7fc;
+  }
+  
+  .verify-email-container h1 {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .verify-email-container p {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .verify-email-container .error-message {
+    color: red;
+    font-size: 18px;
+  }
+  
+  .verify-email-container .success-message {
+    color: green;
+    font-size: 18px;
+  }
+  
+  .loading-spinner-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .loading-spinner {
+    border: 8px solid rgba(0, 0, 0, 0.1);
+    border-top: 8px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+}
+  

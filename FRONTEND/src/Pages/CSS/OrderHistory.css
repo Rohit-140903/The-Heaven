@@ -1,0 +1,292 @@
+/* .his-outer-container{
+    margin-top: 20px;
+    width: 100%;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.his-container {
+    background: #e4e4e4;
+    width: 96%;
+    height: 96%;
+    box-shadow: 2px 2px 10px gray;
+    border-radius: 10px;
+    display: grid;
+}
+
+.his-box{
+    padding: 15px 10px;
+    z-index: 50;
+    border-radius: 10px;
+    background: hsla(0, 93%, 63%, 1);
+
+    background: linear-gradient(135deg, hsla(0, 93%, 63%, 1) 26%, hsla(3, 93%, 72%, 1) 52%, hsla(5, 100%, 88%, 1) 100%);
+    
+    background: -moz-linear-gradient(135deg, hsla(0, 93%, 63%, 1) 26%, hsla(3, 93%, 72%, 1) 52%, hsla(5, 100%, 88%, 1) 100%);
+    
+    background: -webkit-linear-gradient(135deg, hsla(0, 93%, 63%, 1) 26%, hsla(3, 93%, 72%, 1) 52%, hsla(5, 100%, 88%, 1) 100%);
+    
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#F84A4A", endColorstr="#FA7C75", GradientType=1 );
+}
+
+.his-heading{
+    color:black;
+    margin-bottom: 15px;
+    
+    
+}
+
+.his-docs-container{
+    width: 100%;
+    height: 400px;
+    overflow: scroll;
+}
+
+.his-docs{
+    background: white;
+    width: 98%;
+    height: auto;
+    height: 110px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 2px 2px 8px rgb(29, 29, 28);
+    margin: 20px 0;
+    background: hsla(31, 100%, 66%, 1);
+
+background: linear-gradient(360deg, hsla(31, 100%, 66%, 1) 0%, hsla(41, 91%, 68%, 1) 50%, hsla(47, 85%, 75%, 1) 100%);
+
+background: -moz-linear-gradient(360deg, hsla(31, 100%, 66%, 1) 0%, hsla(41, 91%, 68%, 1) 50%, hsla(47, 85%, 75%, 1) 100%);
+
+background: -webkit-linear-gradient(360deg, hsla(31, 100%, 66%, 1) 0%, hsla(41, 91%, 68%, 1) 50%, hsla(47, 85%, 75%, 1) 100%);
+
+filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#FFAC53", endColorstr="#F8C963", GradientType=1 );
+}
+
+.his-docs-box{
+    width: 96%;
+    height: 90px;
+    display: flex;
+}
+
+.his-docs-pic img{
+    width: 75px;
+    height: 90px;
+    border-radius: 4px;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+.his-docs-details{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.his-docs-details h3{
+    color: rgb(0, 0, 0);
+    margin-bottom: 5px;
+}
+
+.his-docs-details h4{
+    color: rgba(40, 37, 37, 0.848);
+}
+
+.loading-spinner-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .loading-spinner {
+    border: 8px solid rgba(0, 0, 0, 0.1);
+    border-top: 8px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+} */
+
+
+.his-outer-container {
+    margin-top: 100px;
+    width: 100%;
+    height: 100vh; /* Increased height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.his-container {
+    background: #e4e4e4;
+    width: 98%; /* Increased width */
+    height: 98%;
+    box-shadow: 3px 3px 12px gray;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+}
+
+.his-box {
+    padding: 20px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #F84A4A 26%, #FA7C75 52%, #FFAFAF 100%);
+    margin-bottom: 20px;
+    box-shadow: 2px 2px 10px gray;
+    height : 600px;
+}
+
+.his-heading {
+    color: black;
+    margin-bottom: 15px;
+    text-align: left
+
+}
+
+.his-docs-container {
+    /* width: 100%;
+    max-height:500px; */
+    /* overflow-y: auto;
+    padding: 10px; */
+    /* border-radius: 8px;
+    background: white; */
+
+    width: 100%;
+    height: 500px;
+    overflow-y: scroll;
+}
+
+.his-docs {
+    background: hsla(31, 100%, 66%, 1);
+
+    background: linear-gradient(360deg, hsla(31, 100%, 66%, 1) 0%, hsla(41, 91%, 68%, 1) 50%, hsla(47, 85%, 75%, 1) 100%);
+    
+    background: -moz-linear-gradient(360deg, hsla(31, 100%, 66%, 1) 0%, hsla(41, 91%, 68%, 1) 50%, hsla(47, 85%, 75%, 1) 100%);
+    
+    background: -webkit-linear-gradient(360deg, hsla(31, 100%, 66%, 1) 0%, hsla(41, 91%, 68%, 1) 50%, hsla(47, 85%, 75%, 1) 100%);
+    
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#FFAC53", endColorstr="#F8C963", GradientType=1 );
+    width: 98%;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+}
+
+.his-docs-box {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.his-docs-pic img {
+    width: 100px; /* Enlarged image */
+    height: 120px;
+    border-radius: 4px;
+    object-fit: cover;
+    border: 2px solid gray;
+}
+
+.his-docs-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.his-docs-details h3 {
+    color: black;
+    margin-bottom: 5px;
+    font-size: 18px;
+}
+
+.his-docs-details h4 {
+    color: rgba(40, 37, 37, 0.8);
+    font-size: 16px;
+}
+
+.address-details-order {
+    margin-top: 10px;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 6px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+.address-details-order h3 {
+    color: black;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.address-details-order h4 {
+    color: rgb(50, 50, 50);
+    font-size: 15px;
+    line-height: 1.4;
+}
+
+.first-details{
+    display: flex;
+    gap: 40px;
+
+}
+
+.second-details{
+    display: flex;
+    gap: 40px;
+}
+
+/* Loading Spinner */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.loading-spinner {
+    border: 8px solid rgba(0, 0, 0, 0.1);
+    border-top: 8px solid #3498db;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

@@ -1,0 +1,104 @@
+
+.container{
+  max-width: 400px;
+  height: auto;
+  margin: auto;
+  margin-top: 100px;
+  margin-bottom: 50px;
+  padding: 0 50px 25px;
+  border-Radius: 25px;
+  box-shadow: 5px 2px 20px rgba(128, 128, 128, 0.258);
+  overflow: hidden;
+
+}
+
+#shipping{
+  font-weight: 700;
+  padding: 10px;
+  text-align: center;
+  color: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+  width: 120%;
+  background-color: #ff4141;
+  margin-bottom: px;
+  translate: -50px;
+}
+
+label{
+  font-family: Arial, Helvetica, sans-serif;
+  font-size:medium;
+}
+
+input{
+  width: 100%;
+  min-height: 30px;
+  border: .5px solid black;
+  border-radius: 10px;
+  padding-left: 20px;
+}
+
+#formContainer{
+  padding: 0px;
+  border: 0;
+  margin: 20px;
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr 2fr;
+  row-gap: 10px;
+}
+
+#addContainer{
+  display: grid;
+  row-gap: 10px;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 50px;
+}
+
+.pay-button{
+  width: 100%;
+  padding: 10px 40px;
+  margin: 40px 0 10px 12px;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-weight:bold;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  letter-spacing: 1px;
+  background-color: #ff4141;;
+  cursor: pointer;
+}
+
+.pay-button:hover{
+  background-color: #ff1414;
+}
+
+.loading-spinner-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.loading-spinner {
+  border: 8px solid rgba(0, 0, 0, 0.1);
+  border-top: 8px solid #3498db;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

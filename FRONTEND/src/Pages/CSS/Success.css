@@ -1,4 +1,4 @@
-.container {
+/* .container {
     display: flex;
     flex-direction: column;
     height: 70vh;
@@ -47,6 +47,115 @@ background-color: white;
 }
 .success-btn:hover{
     background-color: #1af14c;
+} */
+
+
+/* --------------------------------------- */
+
+.outer-success-container {
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -20px;
 }
 
+.success-container{	
+background: hsla(0, 0%, 100%, 1);
 
+background: radial-gradient(circle, hsla(0, 0%, 100%, 1) 45%, hsla(141, 100%, 76%, 1) 100%);
+
+background: -moz-radial-gradient(circle, hsla(0, 0%, 100%, 1) 45%, hsla(141, 100%, 76%, 1) 100%);
+
+background: -webkit-radial-gradient(circle, hsla(0, 0%, 100%, 1) 45%, hsla(141, 100%, 76%, 1) 100%);
+
+filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#FFFFFF", endColorstr="#85FFB0", GradientType=1 );
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    box-shadow: 2px 2px 10px gray;
+    width: 50%;
+}
+
+.success-container .message{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family:monospace;
+    font-size: 20px;
+}
+
+.hello{
+    width: 80%;
+    /* transform: translateY(-60px); */
+    margin: 0;
+}
+
+.success-container .message h3{
+    text-align: center;
+    position: relative;
+    top: -50px;
+    color: rgb(0, 115, 0);
+}
+
+.success-container button{
+    cursor: pointer;
+    color: white;
+    background: #ff4343;
+    padding: 10px 100px;
+    border: none;
+    border-radius: 20px;
+    margin: 20px 0 30px;
+    font-size: x-large;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+button #right-arrow {
+    transform: translate(0px, 5px);
+    padding: 0 0 0 10px;
+    font-weight: bolder;
+    transition: ease-in-out;
+    transition-duration: 0.3s;
+}
+
+.success-container button:hover{
+    background: #fb2222;
+}
+
+.success-container button:hover #right-arrow{
+    transform: translate(10px, 5px);
+}
+
+.loading-spinner-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .loading-spinner {
+    border: 8px solid rgba(0, 0, 0, 0.1);
+    border-top: 8px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+}

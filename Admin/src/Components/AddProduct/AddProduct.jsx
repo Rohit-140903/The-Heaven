@@ -10,9 +10,10 @@ export default function AddProduct() {
     category: "women",
     new_price: "",
     old_price: "",
+    stock: "", // Added stock field
   });
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [loading, setLoading] = useState(false); // Loading state
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem(String(import.meta.env.VITE_AUTH_TOKEN));
@@ -33,7 +34,7 @@ export default function AddProduct() {
   };
 
   const validateProduct = () => {
-    if (!productDetails.name || !productDetails.new_price || !productDetails.old_price || !image) {
+    if (!productDetails.name || !productDetails.new_price || !productDetails.old_price || !productDetails.stock || !image) {
       alert("Please fill all fields and upload an image.");
       return false;
     }
@@ -50,7 +51,7 @@ export default function AddProduct() {
       return;
     }
 
-    setLoading(true); // Start loading
+    setLoading(true);
 
     try {
       const formData = new FormData();
@@ -90,6 +91,7 @@ export default function AddProduct() {
             category: "women",
             new_price: "",
             old_price: "",
+            stock: "",
           });
           setImage(null);
         } else {
@@ -102,7 +104,7 @@ export default function AddProduct() {
       console.error("Error during image upload or product creation:", error);
       alert("An error occurred. Please try again.");
     } finally {
-      setLoading(false); // End loading
+      setLoading(false);
     }
   };
 
@@ -152,6 +154,17 @@ export default function AddProduct() {
             placeholder="Type here"
           />
         </div>
+      </div>
+
+      <div className="addproduct-itemfield">
+        <p>Stock Quantity</p>
+        <input
+          value={productDetails.stock}
+          onChange={changeHandler}
+          type="number"
+          name="stock"
+          placeholder="Enter stock quantity"
+        />
       </div>
 
       <div className="addproduct-itemfield">

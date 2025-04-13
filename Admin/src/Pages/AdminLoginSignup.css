@@ -1,11 +1,9 @@
-.Adminloginsignup{
+/* .Adminloginsignup{
     width : 80%;
-    /* height : 100%; */
     background : #fce3fe;
     padding-top: 5%;
     padding-left: 100px;
     margin : 0px;
-    /* display: flex; */
     
 }
 .Adminloginsignup-container{
@@ -14,9 +12,7 @@
     background: white;
     margin: auto;
     padding : 100px 60px;
-    /* display:  flex;
-    align-items:  center;
-    justify-content: center; */
+
 }
 .Adminloginsignup-container h1{
     margin : 20px 0px;
@@ -102,6 +98,136 @@
         gap : 10px;
     }
 }
+
+.loading-spinner-container {
+    display: flex;
+    justify-content: center; 
+    align-items: center;     
+    position: fixed;      
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.7); 
+    z-index: 999;
+  }
+  
+
+  .loading-spinner {
+    border: 4px solid #f3f3f3; 
+    border-top: 4px solid #3498db; 
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+  }
+  
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+@media(max-width:800px){
+    .Adminloginsignup-container{
+        padding:20px 30px;
+    }
+    .Adminloginsignup-container h1{
+        font-size: 24px;
+    }
+    .Adminloginsignup-fields{
+        margin-top: 20px;
+    } 
+    .Adminloginsignup-fields input{
+        height:50px;
+    }
+    .Adminloginsignup-container button{
+        height:50px;
+        font-size:16px;
+    }
+    .Adminloginsignup-login{
+        text-align : left;
+    }
+} */
+
+.Adminloginsignup{
+    width : 80%;
+    /* height : 100%; */
+    background : #fce3fe;
+    padding-top: 5%;
+    padding-left: 100px;
+    margin : 0px;
+    /* display: flex; */
+    
+}
+.Adminloginsignup-container{
+    width: 550px;
+    height: 470px;
+    background: white;
+    margin: auto;
+    padding : 100px 60px;
+    /* display:  flex;
+    align-items:  center;
+    justify-content: center; */
+}
+.Adminloginsignup-container h1{
+    margin : 20px 0px;
+}
+.Adminloginsignup-fields{
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    margin-top: 30px;
+}
+.Adminloginsignup-fields input{
+    height : 38px;
+    width : 90%;
+    padding-left : 20px;
+    border : 1px solid #c9c9c9;
+    outline : none;
+    color : #5c5c5c;
+    font-size: 18px;
+}
+.Adminloginsignup-container button{
+   width : 520px;
+   height : 50px;
+   color : white;
+   background : #3457D5; 
+   margin-top : 28px;
+   border : none;
+   border-radius: 10px;
+   font-size: 22px;
+   font-weight: 500;
+   cursor: pointer;
+}
+
+.Adminloginsignup-login{
+    margin-top : 20px;
+    color : #5c5c5c;
+    font-size: 18px;
+    font-weight: 500;
+
+}
+.Adminloginsignup-login span{
+    color:#0000FF;
+    font-weight: 600;
+    cursor: pointer;
+}
+.Adminloginsignup-agree{
+    display: flex;
+    align-items: center;
+    margin-top: 25px;
+    gap : 20px;
+    color : #5c5c5c;
+    font-size:18px;
+    font-weight: 500;
+}
+.admin-toggle{
+    position: relative;
+    margin-top:-49px;
+    margin-left: 387px;
+    cursor: pointer;
+}
 /* Loading spinner container styles */
 .loading-spinner-container {
     display: flex;
@@ -131,6 +257,46 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
+
+  
+  .input-toggle{
+    position: relative;
+    right:40px;
+    bottom:1.5px;
+  }
+@media(max-width:1280px){
+    .Adminloginsignup{
+        padding-top: 50px;
+    }
+    .Adminloginsignup-container{
+        width:auto;
+        max-width: 480px;
+        max-height: 440px;
+    }
+    .Adminloginsignup-container h1{
+        margin:5px 0px;
+    }
+    .Adminloginsignup-fields{
+        gap:14px;
+        margin-top: 20px;
+    }
+    .Adminloginsignup-fields input{
+        height:55px;
+        width:85%;
+    }
+    .Adminloginsignup-container button{
+        width: 90%;
+        margin-left: 4px;
+    }
+    .Adminloginsignup-login{
+        font-size: 17px;
+        
+    }
+    .Adminloginsignup-agree{
+        font-size: 16px;
+        gap : 10px;
+    }
+}
   
 @media(max-width:800px){
     .Adminloginsignup-container{
@@ -153,3 +319,12 @@
         text-align : left;
     }
 }
+
+
+
+/* -------------------- */
+/* ion-input-password-toggle{
+    position: absolute;
+    right: 500px;
+    z-index: 50;
+} */

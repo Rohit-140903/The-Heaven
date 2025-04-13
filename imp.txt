@@ -4,4 +4,14 @@ frontend = npm run dev and for build = npm run build
 if backend instance created multiple times do run this command in cmd prompt
 taskkill /F /IM node.exe
 
-todo : make authentication page in admin dashboard with only one admin account
+todo : build cash on delivery css and description and clean the code base
+do copy shopcontext cart Length and copy the index.js as well ****
+
+
+master is like a main branch -> imp
+backend = npm run dev
+frontend = npm run dev and for build = npm run build
+if backend instance created multiple times do run this command in cmd prompt
+taskkill /F /IM node.exe
+
+todo : relatedProduct, success, orderHistory, loading

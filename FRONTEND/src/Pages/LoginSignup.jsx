@@ -9,9 +9,7 @@ function LoginSignup() {
         email: "",
         password: ""
     });
-    const [error, setError] = useState({ 
-        email: "", password: "" 
-    }); 
+    const [error, setError] = useState({ email: "", password: "" }); 
     const [loading, setLoading] = useState(false); // Loading state
 
     const client = new Client()
@@ -88,7 +86,7 @@ function LoginSignup() {
             sendMagicLink();
         } else {
             setLoading(false);
-            setError((prev) => ({ ...prev, password: "An unexpected error occurred. Please try again." }));
+            setError((prev) => ({ ...prev, email: "Email already exist" }));
         }
     };
 

@@ -1,0 +1,135 @@
+.login {
+    width: 100%;
+    height: 80vh;
+    background: #fce3fe;
+    padding-top: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container {
+    width: 450px;
+    background: white;
+    padding: 30px 50px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.login-container h1 {
+    text-align: center;
+    color: #2006b0;
+}
+
+.login-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.login-fields input {
+    height: 40px;
+    width: 90%;
+    padding-left: 15px;
+    border: 1px solid #c9c9c9;
+    border-radius: 5px;
+    font-size: 16px;
+    outline: none;
+    color: #5c5c5c;
+}
+
+.login-container button {
+    width: 94%;
+    height: 50px;
+    background: #032bbf;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.login-container button:disabled {
+    background-color: gray;
+    cursor: not-allowed;
+}
+
+.login-text {
+    margin-top: 20px;
+    color: #5c5c5c;
+    font-size: 16px;
+    text-align: center;
+}
+
+.login-text span {
+    color: #0000FF;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.loading-spinner-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    
+  }
+  
+  .loading-spinner {
+    border: 8px solid rgba(0, 0, 0, 0.1);
+    border-top: 8px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+}
+
+.input-toggle{
+    position: relative;
+    right:40px;
+    bottom:1.5px;
+ }
+
+ .toggle-login{
+    position : absolute;
+    margin-top: 79px;
+    margin-left: 390px;
+    cursor: pointer;
+ }
+  
+
+@media (max-width: 800px) {
+    .login-container {
+        padding: 20px 30px;
+    }
+
+    .login-container h1 {
+        font-size: 22px;
+    }
+
+    .login-fields input {
+        height: 45px;
+    }
+
+    .login-container button {
+        font-size: 16px;
+    }
+}

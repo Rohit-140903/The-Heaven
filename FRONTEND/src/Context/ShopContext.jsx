@@ -3,18 +3,28 @@ import React, { createContext, useEffect, useState } from "react";
 
 export const ShopContext = createContext(null);
 
-const getDefaultCart = () =>{
-  let cart = {};
-  for(let index = 0;index < 300+1;index++){
-    cart[index] = 0;
-  }
-  return cart;
-}
+// const getDefaultCart = () =>{
+//   let cart = {};
+//   for(let index = 0;index < 300+1;index++){
+//     cart[index] = 0;
+//   }
+//   return cart;
+// }
 
 const ShopContextProvider = (props) => {
+  const [all_product,setAll_Product] = useState([]);
 
+  const getDefaultCart = () =>{
+    let cart = {};
+    const len = Object.keys(all_product).length;
+    for(let index = 0;index <= len;index++){
+      cart[index] = 0;
+    }
+    return cart;
+  }
+
+  
 const [cartItems,setcartItems] = useState(getDefaultCart());
-const [all_product,setAll_Product] = useState([]);
 
 useEffect(() =>{
   fetch('http://localhost:4000/allProducts')

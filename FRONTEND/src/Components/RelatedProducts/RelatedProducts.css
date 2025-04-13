@@ -17,11 +17,19 @@
     background : #252525;
 
 }
-.relatedproducts-item{
+.relatedproducts-item {
     margin-top: 50px;
     display: flex;
-    gap : 30px;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: space-between; 
 }
+
+/* .relatedproducts-item > div {
+    flex: 1 1 calc(25% - 30px); 
+    max-width: calc(25% - 30px); 
+    box-sizing: border-box;
+} */
 
 @media(max-width : 1280px){
     .relatedproducts{

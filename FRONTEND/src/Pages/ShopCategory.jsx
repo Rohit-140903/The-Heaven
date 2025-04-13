@@ -4,6 +4,93 @@ import { ShopContext } from "../Context/ShopContext";
 import dropdown_icon from '../Components/Assets/dropdown_icon.png';
 import Items from "../Components/Items/Items";
 
+// const all_products = [
+//     {
+//         id: 1,
+//         name: "product 1",
+//         image: "https://picsum.photos/200/300?random?1",
+//         new_price: 50.00,
+//         old_price: 80.50
+//     },
+//     {
+//         id: 2,
+//         name: "product 1",
+//         image: "https://picsum.photos/200/300?random?2",
+//         new_price: 50.00,
+//         old_price: 80.50
+//     },
+//     {
+//         id: 3,
+//         name: "product 3",
+//         image: "https://picsum.photos/200/300?random?3",
+//         new_price: 50.00,
+//         old_price: 80.50
+//     },
+//     {
+//         id: 4,
+//         name: "product 1",
+//         image: "https://picsum.photos/200/300?random?4",
+//         new_price: 50.00,
+//         old_price: 80.50
+//     },
+//     {
+//         id: 1,
+//         name: "product 1",
+//         image: "https://picsum.photos/200/300?random?1",
+//         new_price: 50.00,
+//         old_price: 80.50
+//     },
+//     {
+//         id: 1,
+//         name: "product 1",
+//         image: "https://picsum.photos/200/300?random?1",
+//         new_price: 50.00,
+//         old_price: 80.50
+//     },
+//     {
+//         id: 1,
+//         name: "product 1",
+//         image: "https://picsum.photos/200/300?random?1",
+//         new_price: 50.00,
+//         old_price: 80.50
+//     },
+//     {
+//         id: 1,
+//         name: "product 1",
+//         image: "https://picsum.photos/200/300?random?1",
+//         new_price: 50.00,
+//         old_price: 80.50
+//     },
+//     {
+//         id: 1,
+//         name: "product 1",
+//         image: "https://picsum.photos/200/300?random?1",
+//         new_price: 50.00,
+//         old_price: 80.50
+//     },
+//     {
+//         id: 1,
+//         name: "product 1",
+//         image: "https://picsum.photos/200/300?random?1",
+//         new_price: 50.00,
+//         old_price: 80.50
+//     },
+//     {
+//         id: 1,
+//         name: "product 1",
+//         image: "https://picsum.photos/200/300?random?1",
+//         new_price: 50.00,
+//         old_price: 80.50
+//     },
+//     {
+//         id: 1,
+//         name: "product 1",
+//         image: "https://picsum.photos/200/300?random?1",
+//         new_price: 50.00,
+//         old_price: 80.50
+//     },
+// ]
+
 function ShopCategory (props){
      const {all_product} = useContext(ShopContext);
     return(
@@ -24,6 +111,7 @@ function ShopCategory (props){
                 
                 /* image = item.image so, item.image = image url which is requested in browser like http://localhost:4000/images/product_1732811665705.jpg 
                 and then show this image to our site */
+
                 }
                 else {
                     return null;

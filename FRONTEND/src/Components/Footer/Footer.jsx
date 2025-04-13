@@ -32,7 +32,7 @@ function Footer (){
             </div>
             <div className = "footer-copyright">
                 <hr />
-                <p>Copyright @ 2k24 - All Right Reserved</p>
+                <p> ©copyright @ 2k24 - All Right Reserved</p>
             </div>
         </div>
     )
