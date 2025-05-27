@@ -360,7 +360,7 @@ const Success = () => {
                             autoplay
                         />
                         <h3>Your transaction was completed <br /> successfully!</h3>
-                        {error && <p className="error-text">{error}</p>}
+                        {/* {error && <p className="error-text">{error}</p>} */}
                     </div>
                     <button onClick={redirectToHome} className="success-btn">
                         Continue Shopping

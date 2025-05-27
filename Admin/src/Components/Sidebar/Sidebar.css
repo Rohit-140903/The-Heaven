@@ -18,11 +18,17 @@
     background: #f6f6f6;
     gap:20px;
     cursor : pointer;
+    color: rgb(14, 1, 35);
 }
 
 .update-stock-icon {
-    width: 20px;  
-    height: 20px; 
+    width: 25px;  
+    height: 25px; 
+}
+.order-list-icon {
+    width: 28px;  
+    height: 28px;
+    margin-left: -20px; 
 }
 
 @media(max-width:800px){

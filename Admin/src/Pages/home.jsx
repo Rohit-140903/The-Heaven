@@ -30,6 +30,8 @@ import UpdateStock from '../Components/UpdateStock/UpdateStock';
 import { Client, Account, ID } from "appwrite";
 import { useState,useEffect } from 'react';
 
+import AllOrders from '../Components/AllOrders/AllOrders';
+
 const Home = ()=>{
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -125,6 +127,7 @@ const Home = ()=>{
                 <Route path = '/addProduct' element = {<AddProduct />} />
                 <Route path = '/listProduct' element = {<ListProduct />} />
                 <Route path = '/updateStock' element = {<UpdateStock />} />
+                <Route path = '/allOrders' element = {<AllOrders />} />
             </Routes>
         </div>
     )

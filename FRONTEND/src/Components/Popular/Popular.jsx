@@ -36,7 +36,7 @@ function Popular() {
           {popularItem.map((item) => (
             <Items
               key={item.image_public_id}
-              id={item.image_public_id}
+              id={item.id}
               name={item.name}
               image={item.image}
               new_price={item.new_price}

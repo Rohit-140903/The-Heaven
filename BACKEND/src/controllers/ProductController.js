@@ -255,6 +255,7 @@ exports.getNewCollections = async (req, res) => {
   
   exports.getPopularInWomen = async (req, res) => {
     let products = await Product.find({ category: "women" });
+    console.log(products);
     let popularInWomen = products.slice(0, 4);
     res.send(popularInWomen);
   };

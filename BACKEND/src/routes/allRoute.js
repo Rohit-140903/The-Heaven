@@ -72,11 +72,12 @@ router.post("/comments", fetchUser, addComment); // POST /api/comments?productId
 
 
 // order
-const { getOrderHistory,addOrder } = require("../controllers/OrderController");
+const { getOrderHistory,addOrder,findAllOrders } = require("../controllers/OrderController");
 
 
 router.post("/addOrder", fetchUser, addOrder);
 router.get("/orderHistory",fetchUser, getOrderHistory);
+router.get("/allOrders",findAllOrders);
 
 
 module.exports = router;

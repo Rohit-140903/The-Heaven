@@ -14,4 +14,4 @@ frontend = npm run dev and for build = npm run build
 if backend instance created multiple times do run this command in cmd prompt
 taskkill /F /IM node.exe
 
-todo : relatedProduct, success, orderHistory, loading
+todo : maintaing stock of product for multiple req at a time (ACID)

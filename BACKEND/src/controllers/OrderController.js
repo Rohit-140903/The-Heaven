@@ -1,9 +1,9 @@
 const Order = require("../models/OrderModel");
-const {User,TempUser} = require("../models/UserModel");
+const { User, TempUser } = require("../models/UserModel");
 const mongoose = require("mongoose");
 
 exports.getOrderHistory = async (req, res) => {
-  console.log("User",req.user);
+  console.log("User", req.user);
   try {
     const user = await User.findById(req.user.id);
     const orders = await Order.find({ userEmail: user.email }).lean(); // Get all orders
@@ -45,62 +45,97 @@ exports.getOrderHistory = async (req, res) => {
 
 exports.addOrder = async (req, res) => {
   try {
-        const user = await User.findById(new mongoose.Types.ObjectId(req.user.id));
-        //console.log("addOrder : ", user.email);
-        if (!user) {
-          return res.status(404).json({ error: "User not found" });
-        }
-        const { products } = req.body;
-    
-        if (!products || products.length === 0) {
-          return res.status(400).json({ error: "No products in the order" });
-        }
-    
-        // ✅ Create structured product data including `imageUrl`, `quantity`, and `price`
-      console.log(products);
-        const orderProducts = products.map((item) => ({
-          productId: item.id,
-          name: item.name,
-          price: item.price,
-          image: item.image,
-          quantity: item.quantity,
-          address : {
-    
-            fullName: user.address.fullName,
-            phone: user.address.phone,
-            street: user.address.street,
-            city: user.address.city,
-            state: user.address.state,
-            zip:user.address.zip,
-            country: user.address.country,
-    
-          },
-          createdAt: item.createdAt,
-        }));
-    
-        let existingUser = await Order.findOne({ userEmail: user.email });
-    
-        if (existingUser) {
-          existingUser.products.push(...orderProducts);
-          // existingUser.createdAt = Date.now();
-          await existingUser.save(); // updates the document if it already exists.
-        } else {
-          existingUser = new Order({
-            userEmail: user.email,
-            products: orderProducts,
+    const user = await User.findById(new mongoose.Types.ObjectId(req.user.id));
+    //console.log("addOrder : ", user.email);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    const { products } = req.body;
+
+    if (!products || products.length === 0) {
+      return res.status(400).json({ error: "No products in the order" });
+    }
+
+    // ✅ Create structured product data including `imageUrl`, `quantity`, and `price`
+    console.log(products);
+    const orderProducts = products.map((item) => ({
+      productId: item.id,
+      name: item.name,
+      price: item.price,
+      image: item.image,
+      quantity: item.quantity,
+      address: {
+        fullName: user.address.fullName,
+        phone: user.address.phone,
+        street: user.address.street,
+        city: user.address.city,
+        state: user.address.state,
+        zip: user.address.zip,
+        country: user.address.country,
+      },
+      createdAt: item.createdAt,
+    }));
+
+    let existingUser = await Order.findOne({ userEmail: user.email });
+
+    if (existingUser) {
+      existingUser.products.push(...orderProducts);
+      // existingUser.createdAt = Date.now();
+      await existingUser.save(); // updates the document if it already exists.
+    } else {
+      existingUser = new Order({
+        userEmail: user.email,
+        products: orderProducts,
+      });
+      await existingUser.save();
+    }
+
+    await User.findByIdAndUpdate(req.user.email, {
+      $push: { orders: existingUser._id },
+    });
+
+    return res
+      .status(201)
+      .json({ message: "Order updated successfully", order: existingUser });
+  } catch (error) {
+    console.error("Error updating order:", error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+exports.findAllOrders = async (req, res) => {
+  try {
+    const orders = await Order.find().lean();
+
+    const flatOrders = [];
+
+    for (const order of orders) {
+      if (order.products && order.products.length > 0) {
+        for (const product of order.products) {
+          const createdAtDate = product.createdAt ? new Date(product.createdAt) : new Date();
+
+          flatOrders.push({
+            date: createdAtDate,
+            userEmail: order.userEmail || "",
+            address: product.address || {},
+            productName: product.name,
+            quantity: product.quantity,
+            price: product.price,
           });
-          await existingUser.save();
         }
-    
-        await User.findByIdAndUpdate(req.user.email, {
-          $push: { orders: existingUser._id },
-        });
-    
-        return res
-          .status(201)
-          .json({ message: "Order updated successfully", order: existingUser });
-      } catch (error) {
-        console.error("Error updating order:", error);
-        return res.status(500).json({ error: "Internal Server Error" });
       }
-    };
+    }
+
+    // Sort by product createdAt ascending
+    flatOrders.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+    res.json({ success: true, Orders: flatOrders });
+  } catch (error) {
+    console.error("Error processing orders:", error);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+};
+
+
+
+

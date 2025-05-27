@@ -1,0 +1,136 @@
+.outer-box {
+  width: 1100px;
+  max-height: 600px;
+  margin: 20px 20px;
+  padding: 20px;
+  /* border: 2px solid #444; */
+  border-radius: 8px;
+  background: linear-gradient(135deg, #F84A4A 26%, #FA7C75 52%, #FFAFAF 100%);
+
+  /* make inner content scrollable if overflow */
+  overflow-y: auto;
+}
+
+.order-list-title {
+  text-align: center;
+  margin-bottom: 8px;
+  margin-top : 8px;
+}
+
+.no-orders {
+  text-align: center;
+  color: #0b0101;
+}
+
+.inner-orders-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  
+}
+
+.order-box {
+  border: 1px solid #ccc;
+  padding: 15px;
+  border-radius: 5px;
+  background: hsla(31, 100%, 66%, 1);
+  background: linear-gradient(360deg, hsla(31, 100%, 66%, 1) 0%, hsla(41, 91%, 68%, 1) 50%, hsla(47, 85%, 75%, 1) 100%);
+  background: -moz-linear-gradient(360deg, hsla(31, 100%, 66%, 1) 0%, hsla(41, 91%, 68%, 1) 50%, hsla(47, 85%, 75%, 1) 100%);
+  background: -webkit-linear-gradient(360deg, hsla(31, 100%, 66%, 1) 0%, hsla(41, 91%, 68%, 1) 50%, hsla(47, 85%, 75%, 1) 100%); 
+  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#FFAC53", endColorstr="#F8C963", GradientType=1 );
+
+}
+
+.order-date,
+.order-email,
+.order-product-info {
+  margin-bottom: 10px;
+}
+
+.order-address-container {
+  margin-bottom: 15px;
+}
+
+.order-address-details {
+  margin-left: 20px;
+  line-height: 1.4;
+}
+
+.order-actions {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.deliver-7-days-btn {
+  cursor: pointer;
+  border-radius: 10px;
+  border: none;
+  /* background-color: #1976d2; */
+  background: linear-gradient(135deg, #F84A4A 26%, #FA7C75 52%, #FFAFAF 100%);
+  transition:  background 0.2s ease;
+  color: black;
+  font-weight: bold;
+  width: 200px;
+  height: 40px;
+  display: flex;
+  align-items: center;       /* Vertically center */
+  justify-content: center;   /* Horizontally center */
+  text-align: center;
+  padding: 1em; 
+
+}
+
+.deliver-7-days-btn:hover {
+  background: #f23417;
+}
+
+.deliver-later-label {
+  font-weight: normal;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.deliver-later-input {
+  padding: 4px 6px;
+  width: 130px;
+  height : 30px;
+}
+
+.scheduled-date {
+  color: green;
+  font-weight: 600;
+}
+
+.loading-spinner-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .loading-spinner {
+    border: 8px solid rgba(0, 0, 0, 0.1);
+    border-top: 8px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }

@@ -6,8 +6,7 @@ import { useLocation } from "react-router-dom";
 import "./CSS/ClientInformation.css";
 import { Truck } from "lucide-react";
 
-
- function AddressPageBuyNow() {
+function AddressPageBuyNow() {
   const { state } = useLocation();
   const { product } = state;
   const navigate = useNavigate();
@@ -36,6 +35,10 @@ import { Truck } from "lucide-react";
         };
   });
 
+  const RESERVATION_TIME = 30;
+  const [secondsLeft, setSecondsLeft] = useState(RESERVATION_TIME);
+  const [timerExpired, setTimerExpired] = useState(false);
+
   const handleChange = (e) => {
     const updatedAddress = { ...address, [e.target.name]: e.target.value };
     setAddress(updatedAddress);
@@ -48,6 +51,20 @@ import { Truck } from "lucide-react";
       setAddress(JSON.parse(savedAddress));
     }
   }, []);
+
+  
+  useEffect(() => {
+    if (secondsLeft <= 0) {
+      setTimerExpired(true);
+      alert("Your reservation has expired. Redirecting to home page.");
+      navigate("/");
+      return;
+    }
+    const interval = setInterval(() => {
+      setSecondsLeft((prev) => prev - 1);
+    }, 1000);
+        return () => clearInterval(interval);
+  }, [secondsLeft, navigate]);
 
   const [errors, setErrors] = useState({});
 
@@ -70,7 +87,7 @@ import { Truck } from "lucide-react";
   const buyNow = async (e) => {
     e.preventDefault();
     window.scrollTo({ top: 0 });
-   // console.log(product);
+    // console.log(product);
 
     if (!validateForm()) return;
 
@@ -80,7 +97,7 @@ import { Truck } from "lucide-react";
       // Save address to the database first
       // const token = localStorage.getItem(import.meta.env.VITE_AUTH_TOKEN) || {};
       // console.log(token);
-      
+
       // const userEmail = user.email;
       // console.log(userEmail);
       setLoading(true);
@@ -88,11 +105,11 @@ import { Truck } from "lucide-react";
         "http://localhost:4000/clientDetails",
         {
           method: "POST",
-          headers: { 
+          headers: {
             "Content-Type": "application/json",
             "auth-token": `${localStorage.getItem("auth-token")}`,
-           },
-          body: JSON.stringify({ address : address }),
+          },
+          body: JSON.stringify({ address: address }),
         }
       );
 
@@ -107,7 +124,7 @@ import { Truck } from "lucide-react";
         id: product.id,
         name: product.name,
         new_price: product.new_price,
-        image : product.image,
+        image: product.image,
         quantity: 1,
       };
 
@@ -139,6 +156,12 @@ import { Truck } from "lucide-react";
     } finally {
       setLoading(false); // Stop loading spinner
     }
+  };
+
+    const formatTimer = (seconds) => {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${m}:${s < 10 ? "0" : ""}${s}`;
   };
 
   //previous one
@@ -261,6 +284,9 @@ import { Truck } from "lucide-react";
         <Truck style={{ paddingRight: "15px", transform: "translateY(3px)" }} />
         Shipping Address
       </h2>
+      <p style={{ fontWeight: "bold", fontSize: "18px", color: timerExpired ? "red" : "black" }}>
+        Reservation expires in: {formatTimer(secondsLeft)}
+      </p>
       <form>
         <div id="formContainer">
           <div>
@@ -376,4 +402,4 @@ import { Truck } from "lucide-react";
     </div>
   );
 }
-export default  AddressPageBuyNow;
+export default AddressPageBuyNow;

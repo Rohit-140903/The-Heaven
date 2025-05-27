@@ -223,13 +223,6 @@
     font-weight: 500;
 }
 .admin-toggle{
-<<<<<<< HEAD
-    position: relative;
-    margin-top:-49px;
-    margin-left: 387px;
-    cursor: pointer;
-}
-=======
     position : absolute;
     margin-top: 82px;
     margin-left: 470px;
@@ -268,7 +261,6 @@
         gap : 10px;
     }
 }
->>>>>>> fa0edaf ( backend structured and Frontend modification)
 /* Loading spinner container styles */
 .loading-spinner-container {
     display: flex;
@@ -299,51 +291,11 @@
     100% { transform: rotate(360deg); }
   }
 
-<<<<<<< HEAD
-  
-=======
->>>>>>> fa0edaf ( backend structured and Frontend modification)
   .input-toggle{
     position: relative;
     right:40px;
     bottom:1.5px;
   }
-<<<<<<< HEAD
-@media(max-width:1280px){
-    .Adminloginsignup{
-        padding-top: 50px;
-    }
-    .Adminloginsignup-container{
-        width:auto;
-        max-width: 480px;
-        max-height: 440px;
-    }
-    .Adminloginsignup-container h1{
-        margin:5px 0px;
-    }
-    .Adminloginsignup-fields{
-        gap:14px;
-        margin-top: 20px;
-    }
-    .Adminloginsignup-fields input{
-        height:55px;
-        width:85%;
-    }
-    .Adminloginsignup-container button{
-        width: 90%;
-        margin-left: 4px;
-    }
-    .Adminloginsignup-login{
-        font-size: 17px;
-        
-    }
-    .Adminloginsignup-agree{
-        font-size: 16px;
-        gap : 10px;
-    }
-}
-=======
->>>>>>> fa0edaf ( backend structured and Frontend modification)
   
 @media(max-width:800px){
     .Adminloginsignup-container{
