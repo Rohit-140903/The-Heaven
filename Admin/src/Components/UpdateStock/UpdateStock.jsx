@@ -31,7 +31,7 @@ export default function UpdateStock() {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:4000/updateStock", {
+      const response = await fetch("http://localhost:4000/api/updateStock", {
         method: "POST",
         headers: {
           "Accept": "application/json",

@@ -60,7 +60,7 @@ function ResetPassword() {
       await account.updateRecovery(userId, secret, password, confirmPassword);
       //console.log("Password updated successfully!", password);
 
-      const response = await fetch("http://localhost:4000/update-password", {
+      const response = await fetch("http://localhost:4000/api/update-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

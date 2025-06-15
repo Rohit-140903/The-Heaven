@@ -21,7 +21,7 @@ export default function ListProduct() {
   const fetchInfo = async () => {
     setLoading(true); // Start loading
     try {
-      const res = await fetch('http://localhost:4000/allProducts');
+      const res = await fetch('http://localhost:4000/api/allProducts');
       const data = await res.json();
       setAllProducts(data);
     } catch (error) {
@@ -34,7 +34,7 @@ export default function ListProduct() {
   const remove_product = async (id) => {
     setLoading(true); // Start loading
     try {
-      await fetch('http://localhost:4000/removeProduct', {
+      await fetch('http://localhost:4000/api/removeProduct', {
         method: 'POST',
         headers: {
           Accept: 'application/json',

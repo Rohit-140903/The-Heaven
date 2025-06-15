@@ -1,56 +1,3 @@
-// import React, { useContext, useState, useEffect } from "react";
-// import { ShopContext } from "../Context/ShopContext";
-// import { useParams } from "react-router-dom";
-// import Breadcrum from "../Components/BreadCrums/BreadCrums";
-// import ProductDisplay from "../Components/ProductDisplay/ProductDisplay";
-// import DescriptionBox from "../Components/DescriptionBox/DescriptionBox";
-// import RelatedProducts from "../Components/RelatedProducts/RelatedProducts";
-
-// function Product() {
-//     const { all_product } = useContext(ShopContext);
-//     const { productId } = useParams();
-//     const [stockStatus, setStockStatus] = useState(null);
-//     const [loading, setLoading] = useState(true);
-
-//     //console.log(all_product);
-//     const product = all_product.find((e) => e.id === Number(productId));
-
-//     useEffect(() => {
-//         const fetchStockStatus = async () => {
-//             console.log("Fetching stock status...");  // Debugging log to check if this is being called
-    
-//             try {
-//                 const response = await fetch(`http://localhost:4000/checkStock/${productId}`);
-//                 const data = await response.json();
-//                 console.log("Stock response data:", data);  // Log the response
-//                 if (data.success) {
-//                     setStockStatus(data.stockStatus);  // Set the stock status
-//                 } else {
-//                     console.error("Error fetching stock status:", data.message);
-//                 }
-//             } catch (error) {
-//                 console.error("Error fetching stock status:", error);
-//             }
-//         };
-    
-//         fetchStockStatus();
-//     }, [productId]);
-    
-    
-
-//     return (
-//         <div>
-//             <Breadcrum product={product} />
-//             <ProductDisplay product={product} stockStatus={stockStatus} />
-//             <DescriptionBox product = {product}/>
-//             <RelatedProducts product = {product}/>
-//         </div>
-//     );
-// }
-
-// export default Product;
-
-
 
 import React, { useContext, useState, useEffect } from "react";
 import { ShopContext } from "../Context/ShopContext";
@@ -76,7 +23,7 @@ function Product() {
             }
 
             try {
-                const response = await fetch(`http://localhost:4000/checkStock/${productId}`);
+                const response = await fetch(`http://localhost:4000/api/checkStock/${productId}`);
                 const data = await response.json();
                 if (data.success) {
                     setStockStatus(data.stockStatus);

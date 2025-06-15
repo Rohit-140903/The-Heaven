@@ -4,7 +4,7 @@ const fetchUser = require("../middleware/AuthMiddleware");
 
 const router = express.Router();
 
-router.get("/", getComments); // GET /api/comments?productId=123
-router.post("/", fetchUser, addComment); // POST /api/comments?productId=123
+router.get("/comments", getComments); // GET /api/comments?productId=123
+router.post("/comments", fetchUser, addComment); // POST /api/comments?productId=123
 
 module.exports = router;

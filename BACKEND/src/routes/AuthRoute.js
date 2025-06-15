@@ -1,5 +1,6 @@
 const express = require("express");
 const { signup, login,updatePassword,verifyEmailSignup,verifyEmail,clientDetails,adminLogin,adminSignup } = require("../controllers/AuthController");
+const fetchUser = require("../middleware/AuthMiddleware")
 const router = express.Router();
 
 router.post("/signup", signup);

@@ -57,7 +57,7 @@ export default function AddProduct() {
       const formData = new FormData();
       formData.append("product", image);
 
-      const uploadResponse = await fetch("http://localhost:4000/upload", {
+      const uploadResponse = await fetch("http://localhost:4000/api/upload", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -73,7 +73,7 @@ export default function AddProduct() {
           image_public_id: uploadData.imagePublicId,
         };
 
-        const productResponse = await fetch("http://localhost:4000/addProduct", {
+        const productResponse = await fetch("http://localhost:4000/api/addProduct", {
           method: "POST",
           headers: {
             Accept: "application/json",

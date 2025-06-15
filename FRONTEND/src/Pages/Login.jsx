@@ -1,86 +1,4 @@
-// import React, { useState } from "react";
-// import { useNavigate } from "react-router-dom";
-// import { Client, Account, ID } from "appwrite";
-// import "./CSS/Login.css"; // Import login-specific styles
 
-// function Login() {
-//     const [formData, setFormData] = useState({ email: "", password: "" });
-//     const [loading, setLoading] = useState(false);
-//     const [error, setError] = useState({ email: "", password: "" });
-//     const navigate = useNavigate();
-
-//     // const client = new Client()
-//     //     .setEndpoint(String(import.meta.env.VITE_APPWRITE_ENDPOINT))
-//     //     .setProject(String(import.meta.env.VITE_APPWRITE_PROJECT_ID));
-
-//     // const account = new Account(client);
-
-//     const validateEmail = (email) => {
-//         const regex = /^[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com|outlook\.com|hotmail\.com)$/;
-//         if (!regex.test(email)) {
-//             setError((prev) => ({ ...prev, email: "Please enter a valid email with a supported domain (gmail.com, yahoo.com, etc.)" }));
-//             return false;
-//         }
-//         setError((prev) => ({ ...prev, email: "" }));
-//         return true;
-//     };
-
-//     const login = async () => {
-//         if (!validateEmail(formData.email)) return;
-
-//         setLoading(true);
-
-//         let responseData;
-//         await fetch('http://localhost:4000/login', {
-//             method: 'POST',
-//             headers: {
-//                 Accept: 'application/form-data',
-//                 'Content-Type': 'application/json',
-//             },
-//             body: JSON.stringify(formData),
-//         })
-//         .then((res) => res.json())
-//         .then((data) => responseData = data)
-//         .catch((err) => {
-//             setLoading(false);
-//             console.error(err);
-//             setError((prev) => ({ ...prev, password: "Login failed. Please try again." }));
-//         });
-
-//             if (responseData?.success) {
-//                 localStorage.setItem(String(import.meta.env.VITE_AUTH_TOKEN), responseData.token);
-//                 navigate('/');
-//                 window.location.reload();
-//             } else {
-//                 setLoading(false);
-//                 setError((prev) => ({ ...prev, password: "Wrong password or email. Please try again." }));
-//             }
-
-//     };
-
-//     return (
-//         <div className="login">
-//             <div className="login-container">
-//                 <h1>Login</h1>
-//                 <div className="login-fields">
-//                     <input type="text" name="email" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} placeholder="Email Address" />
-//                     {error.email && <p style={{ color: 'red' }}>{error.email}</p>}
-//                     <input type="password" name="password" value={formData.password} onChange={(e) => setFormData({ ...formData, password: e.target.value })} placeholder="Password" />
-//                     {error.password && <p style={{ color: 'red' }}>{error.password}</p>}
-//                 </div>
-//                 <button onClick={login} disabled={loading}>
-//                     {loading ? "Logging in..." : "Login"}
-//                 </button>
-//                 <p className="login-text">
-//                 <input type="checkbox" name="" id="" />
-//                     Don't have an account? <span onClick={() => navigate("/signup")}>Sign up</span>
-//                 </p>
-//             </div>
-//         </div>
-//     );
-// }
-
-// export default Login;
 
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -143,7 +61,7 @@ function Login() {
     setLoading(true);
 
     let responseData;
-    await fetch("http://localhost:4000/login", {
+    await fetch("http://localhost:4000/api/login", {
       method: "POST",
       headers: {
         Accept: "application/form-data",

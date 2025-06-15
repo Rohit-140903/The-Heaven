@@ -137,5 +137,45 @@ exports.findAllOrders = async (req, res) => {
 };
 
 
+const nodemailer = require("nodemailer");
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+});
+
+exports.sendMailToUser = async (req,res) => {
+  const email = req.body.email;
+  const name = req.body.name;
+  const product = req.body.product;
+  const deliveryDate = req.body.deliveryDate;
+
+  const mailOptions = {
+    from: process.env.EMAIL_USER,
+    to: email,
+    subject: "Delivery Schedule for Your Order",
+    html: `
+      <p>Hello ${name || "Customer"},</p>
+      <p>Your order for <strong>${product}</strong> is scheduled for delivery on <strong>${deliveryDate}</strong>.</p>
+      <br/>
+      <p>Thank you for shopping with us.</p>
+    `,
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+    res.json({success: true });
+  } catch (err) {
+    console.error("Error sending email:", err);
+    res.json({ success: false, error: err.message });
+  }
+};
+
+
+
+
 
 

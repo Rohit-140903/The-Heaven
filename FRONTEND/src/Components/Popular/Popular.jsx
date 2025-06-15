@@ -10,7 +10,7 @@ function Popular() {
     const fetchData = async () => {
       setLoading(true); // Start loading spinner
       try {
-        const response = await fetch('http://localhost:4000/popularinwomen');
+        const response = await fetch('http://localhost:4000/api/popularinwomen');
         const data = await response.json();
         setPopularItem(data);
       } catch (error) {

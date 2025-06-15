@@ -4,14 +4,12 @@ const multer = require("multer");
 const {
   getNewCollections,
   getPopularInWomen,
-  checkStockInCart,
-  updateStock,
   getAllProducts,
   addProduct,
   uploadImage,
-  checkStock,
+  removeProduct,
 } = require("../controllers/ProductController");
-const fetchUser = require("../middleware/fetchUser");
+const fetchUser = require("../middleware/AuthMiddleware");
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, "uploads/"),
@@ -24,10 +22,8 @@ router.post("/upload", upload.single("product"), uploadImage);
 router.post("/addProduct", upload.single("product"), addProduct);
 router.get("/allProducts", getAllProducts);
 router.post("/removeProduct", removeProduct);
-router.post("/updateStock", updateStock);
+
 router.get("/newcollections", getNewCollections);
 router.get("/popularinwomen", getPopularInWomen);
-router.get("/checkStock/:productId", checkStock);
-router.get("/checkStockInCart", checkStockInCart);
 
 module.exports = router;

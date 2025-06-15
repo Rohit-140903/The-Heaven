@@ -102,7 +102,7 @@ function AddressPageBuyNow() {
       // console.log(userEmail);
       setLoading(true);
       const saveAddressResponse = await fetch(
-        "http://localhost:4000/clientDetails",
+        "http://localhost:4000/api/clientDetails",
         {
           method: "POST",
           headers: {
@@ -132,7 +132,7 @@ function AddressPageBuyNow() {
 
       setLoading(true);
 
-      const response = await fetch("http://localhost:4000/buy-now-checkout", {
+      const response = await fetch("http://localhost:4000/api/buy-now-checkout", {
         method: "POST",
         headers: headers,
         body: JSON.stringify(body),
