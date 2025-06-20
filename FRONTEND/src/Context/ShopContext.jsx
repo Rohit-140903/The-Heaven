@@ -47,22 +47,55 @@ useEffect(() =>{
 },[])
 
 
-const addToCart = (itemId)=>{
-  setcartItems((prev) =>({...prev,[itemId] : prev[itemId]+1}))
-  if(localStorage.getItem('auth-token')){
-    fetch('http://localhost:4000/api/addtocart',{
-      method:'POST',
-      headers:{
-        Accept:'application/form-data',
-        'auth-token' : `${localStorage.getItem('auth-token')}`,
-        'Content-Type' : 'application/json',
+// const addToCart = (itemId)=>{
+//   setcartItems((prev) =>({...prev,[itemId] : prev[itemId]+1}))
+//   if(localStorage.getItem('auth-token')){
+//     fetch('http://localhost:4000/api/addtocart',{
+//       method:'POST',
+//       headers:{
+//         Accept:'application/form-data',
+//         'auth-token' : `${localStorage.getItem('auth-token')}`,
+//         'Content-Type' : 'application/json',
+//       },
+//       body:JSON.stringify({"itemId":itemId}),
+//     })
+//     .then((res) => res.json())
+//     .then((data) => setAll_Product(data));
+//   }
+// }
+
+const addToCart = (itemId) => {
+  
+  setcartItems((prev) => ({
+    ...prev,
+    [itemId]: (prev[itemId] || 0) + 1, 
+  }));
+
+  
+  if (localStorage.getItem('auth-token')) {
+    fetch('http://localhost:4000/api/addtocart', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json', 
+        'Content-Type': 'application/json', 
+        'auth-token': localStorage.getItem('auth-token'),
       },
-      body:JSON.stringify({"itemId":itemId}),
+      body: JSON.stringify({ itemId }), 
     })
-    .then((res) => res.json())
-    .then((data) => setAll_Product(data));
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success && data.cart) {
+          setcartItems(data.cart); 
+        } else {
+          console.warn("Backend didn't return updated cart:", data);
+        }
+      })
+      .catch((err) => {
+        console.error("Error syncing with backend:", err);
+      });
   }
-}
+};
+
  
 // const removeFromCart = (itemId)=>{
 //   setcartItems((prev)=>({...prev,[itemId]:prev[itemId]-1}));

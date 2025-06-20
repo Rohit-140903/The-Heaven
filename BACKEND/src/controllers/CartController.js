@@ -11,18 +11,46 @@ exports.totalCartItems = async (req, res) => {
   }
 };
 
+// exports.addToCart = async (req, res) => {
+//   try {
+//     let userData = await User.findOne({ _id: req.user.id });
+//     userData.cartData[req.body.itemId] += 1;
+//     await User.findOneAndUpdate(
+//       { _id: req.user.id },
+//       { cartData: userData.cartData }
+//     );
+//   } catch (error) {
+//     res.status(500).json({ error: "Failed to add item to cart" });
+//   }
+// };
+
 exports.addToCart = async (req, res) => {
   try {
     let userData = await User.findOne({ _id: req.user.id });
-    userData.cartData[req.body.itemId] += 1;
+    const itemId = req.body.itemId;
+
+    if (!userData.cartData) {
+      userData.cartData = {};
+    }
+
+    if (!userData.cartData[itemId]) {
+      userData.cartData[itemId] = 1;
+    } else {
+      userData.cartData[itemId] += 1;
+    }
+
     await User.findOneAndUpdate(
       { _id: req.user.id },
       { cartData: userData.cartData }
     );
+
+    res.status(200).json({ success: true, cart: userData.cartData }); 
   } catch (error) {
-    res.status(500).json({ error: "Failed to add item to cart" });
+    console.error("Error in addToCart:", error);
+    res.status(500).json({ success: false, error: "Failed to add item to cart" });
   }
 };
+
 
 exports.checkStockInCart = async (req,res) =>{
   try {
