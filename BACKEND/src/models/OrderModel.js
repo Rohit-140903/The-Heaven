@@ -19,6 +19,8 @@ const orderSchema = new mongoose.Schema({
         country: String,
       },
       createdAt: { type: Date, default: Date.now },
+      completed: { type: Boolean, default: false },
+      deliveredAt :{type : Date,default : null},
     },
   ],
 });

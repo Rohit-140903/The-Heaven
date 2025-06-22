@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "./UpdateStock.css";
+import { useNavigate } from "react-router-dom";
 
 export default function UpdateStock() {
   const [productName, setProductName] = useState("");
   const [stock, setStock] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem(String(import.meta.env.VITE_AUTH_TOKEN));
@@ -13,14 +15,15 @@ export default function UpdateStock() {
       setIsAuthenticated(true);
     } else {
       setIsAuthenticated(false);
+      navigate("/Adminlogin")
     }
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!isAuthenticated) {
-      alert("Please log in first.");
-      return;
+      
+      return null;
     }
 
     if (!productName || !stock) {

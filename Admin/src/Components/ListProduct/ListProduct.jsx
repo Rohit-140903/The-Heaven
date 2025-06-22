@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import './ListProduct.css';
 import remove_icon from '../../assets/remove_icon.png';
+import { useNavigate } from 'react-router-dom';
 
 export default function ListProduct() {
   const [allproducts, setAllProducts] = useState([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(false); // Loading state
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem(String(import.meta.env.VITE_AUTH_TOKEN));
@@ -14,7 +16,7 @@ export default function ListProduct() {
       fetchInfo(); // Fetch products only if authenticated
     } else {
       setIsAuthenticated(false);
-      alert("Please log in first.");
+      navigate('/Adminlogin')
     }
   }, []);
 

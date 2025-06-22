@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from "react";
 import "./AddProduct.css";
 import upload_area from "../../assets/upload_area.svg";
+import { useNavigate } from "react-router-dom";
 
 export default function AddProduct() {
   const [image, setImage] = useState(null);
+  const navigate = useNavigate();
   const [productDetails, setProductDetails] = useState({
     name: "",
     image: "",
     category: "women",
     new_price: "",
     old_price: "",
-    stock: "", // Added stock field
+    stock: "",
   });
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -20,8 +22,8 @@ export default function AddProduct() {
     if (token) {
       setIsAuthenticated(true);
     } else {
+      navigate('/Adminlogin')
       setIsAuthenticated(false);
-      alert("Please log in first.");
     }
   }, []);
 
@@ -42,14 +44,7 @@ export default function AddProduct() {
   };
 
   const Add_Product = async () => {
-    if (!isAuthenticated) {
-      alert("Please log in first.");
-      return;
-    }
-
-    if (!validateProduct()) {
-      return;
-    }
+    if (!validateProduct()) return;
 
     setLoading(true);
 
@@ -59,9 +54,7 @@ export default function AddProduct() {
 
       const uploadResponse = await fetch("http://localhost:4000/api/upload", {
         method: "POST",
-        headers: {
-          Accept: "application/json",
-        },
+        headers: { Accept: "application/json" },
         body: formData,
       });
       const uploadData = await uploadResponse.json();
@@ -108,14 +101,13 @@ export default function AddProduct() {
     }
   };
 
+  if (!isAuthenticated) { //Don't render anything
+    return null;
+  }
+  
+
   return (
     <div className="addproduct">
-      {!isAuthenticated && (
-        <div className="alert-message">
-          <p>You need to be logged in to add a product.</p>
-        </div>
-      )}
-
       {loading && (
         <div className="loading-spinner-overlay">
           <div className="loading-spinner"></div>

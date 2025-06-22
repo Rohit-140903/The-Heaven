@@ -56,8 +56,8 @@ exports.addOrder = async (req, res) => {
       return res.status(400).json({ error: "No products in the order" });
     }
 
-    // ✅ Create structured product data including `imageUrl`, `quantity`, and `price`
-    console.log(products);
+    // Create structured product data including `imageUrl`, `quantity`, and `price`
+    //console.log(products);
     const orderProducts = products.map((item) => ({
       productId: item.id,
       name: item.name,
@@ -115,16 +115,21 @@ exports.findAllOrders = async (req, res) => {
           const createdAtDate = product.createdAt ? new Date(product.createdAt) : new Date();
 
           flatOrders.push({
+            orderId :product._id,
             date: createdAtDate,
             userEmail: order.userEmail || "",
             address: product.address || {},
             productName: product.name,
             quantity: product.quantity,
             price: product.price,
+            completed : product.completed,
+            deliveredAt : product.deliveredAt,
           });
         }
       }
     }
+
+   // console.log(flatOrders);
 
     // Sort by product createdAt ascending
     flatOrders.sort((a, b) => new Date(a.date) - new Date(b.date));
@@ -174,6 +179,48 @@ exports.sendMailToUser = async (req,res) => {
   }
 };
 
+exports.updateOrderDetails = async (req, res) => {
+  //console.log("details", req.body);
+
+  const { orderId, userEmail, deliveredAt, completed } = req.body;
+
+  if (!orderId || !userEmail) {
+    return res.status(400).json({ success: false, message: "orderId and userEmail are required" });
+  }
+
+  try {
+    // Correct: Pass filter as an object
+    const order = await Order.findOne({ userEmail });
+
+    if (!order) {
+      return res.status(404).json({ success: false, message: "Order not found for user" });
+    }
+
+    //Find the product by orderId inside order.orders (or whatever nested array holds the order details)
+    const product = order.products.find(o => o._id.toString() === orderId);
+
+    if (!product) {
+      return res.status(404).json({ success: false, message: "Order item not found" });
+    }
+
+    // Safely update
+    if (deliveredAt !== undefined) {
+      product.deliveredAt = deliveredAt;
+    }
+
+    if (completed !== undefined) {
+      product.completed = completed;
+    }
+
+    await order.save();
+
+    return res.status(200).json({ success: true, message: "Order updated successfully" });
+
+  } catch (err) {
+    console.error("Error updating order:", err);
+    return res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
 
 
 
