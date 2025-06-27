@@ -41,59 +41,44 @@ exports.uploadImage = async (req, res) => {
 };
 
 // Add product
+// ✅ Assumes image is already uploaded and you're just storing info
 exports.addProduct = async (req, res) => {
-  if (!req.body.image) {
+  const {
+    name,
+    category,
+    image, // Cloudinary image URL
+    image_public_id,
+    new_price,
+    old_price,
+    stock,
+  } = req.body;
+
+  if (!image || !image_public_id) {
     return res
       .status(400)
-      .json({ success: false, message: "No file uploaded." });
+      .json({ success: false, message: "Image not uploaded." });
   }
 
-  // Upload to Cloudinary
-  cloudinary.uploader.upload(req.body.image, async (error, result) => {
-    if (error) {
-      return res
-        .status(500)
-        .json({ success: false, message: "Failed to upload to Cloudinary." });
-    }
-    // Create a new product with Cloudinary image URL and public ID
-    const {
-      name,
-      category,
-      image,
-      new_price,
-      old_price,
-      image_public_id,
-      stock,
-    } = req.body;
+  try {
     const count = await Product.countDocuments();
     const newProduct = new Product({
       id: count + 1,
       name,
-      image: image, // Use Cloudinary image URL
-      image_public_id: image_public_id, // Use Cloudinary public ID
+      image, // correct: image URL
+      image_public_id, // correct: cloudinary public_id
       category,
       new_price,
       old_price,
       stock,
     });
 
-    //  Save the product to the database
-    try {
-      await newProduct.save();
-      res.json({ success: true, message: "Product added successfully!" });
-      // console.log(newProduct);
-    } catch (error) {
-      res.json({ success: false, message: error.message });
-    }
-
-    // Delete the file from the local machine after upload
-    fs.unlink(req.body.image, (err) => {
-      if (err) {
-        console.error("Error deleting file from local storage:", err);
-      }
-    });
-  });
+    await newProduct.save();
+    res.json({ success: true, message: "Product added successfully!" });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
 };
+
 
 // Fetch all products
 exports.getAllProducts = async (req, res) => {
