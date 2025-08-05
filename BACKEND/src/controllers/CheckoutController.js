@@ -483,6 +483,9 @@ exports.checkoutSession = async (req, res) => {
     cancel_url: "http://localhost:5173/failure",
   });
 
+  //CHECKOUT_SESSION_ID} is not a variable you define — it's a special 
+  // string that Stripe recognizes and replaces automatically with the actual Checkout Session ID when redirecting the user.
+
   res.json({ id: session.id });
 };
 

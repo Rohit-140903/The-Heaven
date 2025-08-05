@@ -90,7 +90,7 @@ export default function AddressPageCheckout() {
 
     if (timerExpired) {
       alert("Reservation expired. Please start your order again.");
-      navigate("/");
+      navigate("/cart");
       return;
     }
 
@@ -121,6 +121,8 @@ export default function AddressPageCheckout() {
         (sum, item) => sum + item.details.new_price * item.quantity,
         0
       );
+
+      //The 0 is the initial value of the sum accumulator in reduce.
 
       const updatedProduct = inStockProducts.map((item) => item.details);
 

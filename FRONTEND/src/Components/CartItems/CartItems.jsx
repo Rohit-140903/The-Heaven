@@ -1,4 +1,3 @@
-
 import React, { useContext, useState, useEffect } from "react";
 import "./CartItems.css";
 import { ShopContext } from "../../Context/ShopContext";
@@ -10,7 +9,7 @@ export default function CartItems() {
   const navigate = useNavigate();
   const {
     all_product,
-    cartItems = {},  // Ensure cartItems is not null
+    cartItems = {}, // Ensure cartItems is not null
     addToCart,
     removeFromCart,
     getTotalCartAmount,
@@ -37,11 +36,14 @@ export default function CartItems() {
       }
 
       try {
-        const response = await fetch("http://localhost:4000/api/checkStockInCart", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ products: productQuantities }),
-        });
+        const response = await fetch(
+          "http://localhost:4000/api/checkStockInCart",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ products: productQuantities }),
+          }
+        );
 
         if (!response.ok) throw new Error("Failed to fetch stock status");
 
@@ -63,7 +65,7 @@ export default function CartItems() {
 
   const giveclientInformation = async () => {
     setLoading(true);
-    const token = localStorage.getItem('auth-token');
+    const token = localStorage.getItem("auth-token");
     if (!token) {
       setLoading(false);
       alert("Not a Valid User, Login First!");
@@ -71,7 +73,19 @@ export default function CartItems() {
     }
 
     try {
-      navigate('/ClientInformation', { state: { stockStatus } });
+      const total = all_product.reduce(
+        (sum, item) =>
+          cartItems?.[item.id] > 0 && stockStatus[item.id]
+            ? sum + item.new_price * cartItems[item.id]
+            : sum,
+        0
+      );
+
+      if (total === 0) {
+        alert("Nothing To Checkout!!");
+        return;
+      }
+      navigate("/ClientInformation", { state: { stockStatus } });
     } finally {
       setLoading(false);
     }
@@ -98,11 +112,22 @@ export default function CartItems() {
         if (cartItems?.[item.id] > 0) {
           const inStock = stockStatus[item.id] ?? true; // Default to true if undefined
           return (
-            <div key={item.id} className={`cart-item ${inStock ? "" : "out-of-stock"}`}>
+            <div
+              key={item.id}
+              className={`cart-item ${inStock ? "" : "out-of-stock"}`}
+            >
               <div className="cartitems-format cartitems-format-main">
                 <div className="cartitems-image-container">
-                  <img src={item.image} alt={item.name} className="carticon-product-icon" />
-                  <span className={inStock ? "in-stock-message" : "out-of-stock-message"}>
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="carticon-product-icon"
+                  />
+                  <span
+                    className={
+                      inStock ? "in-stock-message" : "out-of-stock-message"
+                    }
+                  >
                     {inStock ? "In Stock" : "Out of Stock"}
                   </span>
                 </div>
@@ -112,8 +137,14 @@ export default function CartItems() {
                   {cartItems[item.id]}
                 </button>
                 <p>${item.new_price * cartItems[item.id]}</p>
-                <Trash2 className="cart-icon" onClick={() => removeFromCart(item.id)} />
-                <CirclePlus className="cart-icon" onClick={() => addToCart(item.id)} />
+                <Trash2
+                  className="cart-icon"
+                  onClick={() => removeFromCart(item.id)}
+                />
+                <CirclePlus
+                  className="cart-icon"
+                  onClick={() => addToCart(item.id)}
+                />
               </div>
               <hr />
             </div>
@@ -146,7 +177,8 @@ export default function CartItems() {
             <div className="cartitems-total-item">
               <h3>Total</h3>
               <h3>
-                ${all_product.reduce(
+                $
+                {all_product.reduce(
                   (sum, item) =>
                     cartItems?.[item.id] > 0 && stockStatus[item.id]
                       ? sum + item.new_price * cartItems[item.id]
@@ -169,4 +201,3 @@ export default function CartItems() {
     </div>
   );
 }
-
