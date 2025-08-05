@@ -56,8 +56,8 @@ export default function AddressPageCheckout() {
   useEffect(() => {
     if (secondsLeft <= 0) {
       setTimerExpired(true);
-      alert("Your reservation has expired. Redirecting to home page.");
-      navigate("/");
+      alert("Your reservation has expired. Redirecting to cart page.");
+      navigate("/cart");
       return;
     }
     const interval = setInterval(() => {

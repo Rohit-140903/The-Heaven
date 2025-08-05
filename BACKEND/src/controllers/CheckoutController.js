@@ -560,6 +560,7 @@ exports.checkPaymentStatusWithSessionId = async (req, res) => {
     // Atomically reduce stock now, before creating ProcessedPayment
 
     // Validate and reduce stock for each item****
+    //Wrap cartItems in an array so it becomes a list 
     for (const item of (metadata.type === "buy-now" ? [cartItems] : cartItems)) {
       const updated = await Product.findOneAndUpdate(
         { id: item.id, stock: { $gte: item.quantity } },
