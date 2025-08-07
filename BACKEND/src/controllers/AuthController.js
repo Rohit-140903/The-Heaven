@@ -270,9 +270,12 @@ exports.ResetPassword = async(req,res) => {
     const name = user.name;
     const password = user.password;
 
-    await resend.emails.send({
+    console.log('Attempting to send email to:', email);
+    console.log('Using API key:', process.env.RESEND_API_KEY ? 'Present' : 'Missing');
+
+    const result = await resend.emails.send({
       from: 'onboarding@resend.dev',
-      to: email,
+      to: ['shawadharsh@gmail.com'],
       subject: 'The-Heaven Reset-Password Request',
       html: `
         <p>Hello ${name || "Customer"},</p>
@@ -282,10 +285,11 @@ exports.ResetPassword = async(req,res) => {
       `,
     });
 
-    res.json({success: true });
+    console.log('Email sent successfully:', result);
+    res.json({success: true, message: "Email sent successfully" });
   } catch (err) {
-    console.error("Error sending email:", err);
-    res.json({ success: false, error: err.message });
+    console.error("Detailed error:", err);
+    res.json({ success: false, error: `Email failed: ${err.message}` });
   }
 };
 
