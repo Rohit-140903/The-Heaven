@@ -270,15 +270,20 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 exports.ResetPassword = async(req,res) => {
   const {email} = req.body;
-  const user = await User.findOne({email});
-  console.log("hello",user);
-  const name = user.name;
-  const password = user.password;
-
+  
   try {
-    await resend.emails.send({
-      from: 'Acme <onboarding@resend.dev>',
-      to: ['shawadharsh@gmail.com'],
+    const user = await User.findOne({email});
+    if (!user) {
+      return res.json({ success: false, error: "User not found" });
+    }
+    
+    console.log("hello",user);
+    const name = user.name;
+    const password = user.password;
+
+    const result = await resend.emails.send({
+      from: 'onboarding@resend.dev',
+      to: email,
       subject: 'The-Heaven Reset-Password Request',
       html: `
         <p>Hello ${name || "Customer"},</p>
@@ -287,6 +292,8 @@ exports.ResetPassword = async(req,res) => {
         <p>Thank you for Choosing Us</p>
       `,
     });
+    
+    console.log('Email sent successfully:', result);
     res.json({success: true });
   } catch (err) {
     console.error("Error sending email:", err);
