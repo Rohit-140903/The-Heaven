@@ -255,16 +255,6 @@ exports.updatePassword = async (req, res) => {
   }
 };
 
-// const nodemailer = require("nodemailer");
-
-// const transporter = nodemailer.createTransport({
-//   service: "gmail",
-//   auth: {
-//     user: process.env.EMAIL_USER,
-//     pass: process.env.EMAIL_PASS,
-//   },
-// });
-
 const { Resend } = require('resend');
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -277,11 +267,10 @@ exports.ResetPassword = async(req,res) => {
       return res.json({ success: false, error: "User not found" });
     }
     
-    console.log("hello",user);
     const name = user.name;
     const password = user.password;
 
-    const result = await resend.emails.send({
+    await resend.emails.send({
       from: 'onboarding@resend.dev',
       to: email,
       subject: 'The-Heaven Reset-Password Request',
@@ -292,8 +281,7 @@ exports.ResetPassword = async(req,res) => {
         <p>Thank you for Choosing Us</p>
       `,
     });
-    
-    console.log('Email sent successfully:', result);
+
     res.json({success: true });
   } catch (err) {
     console.error("Error sending email:", err);
