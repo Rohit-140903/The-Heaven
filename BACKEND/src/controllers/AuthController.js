@@ -277,7 +277,7 @@ exports.ResetPassword = async(req,res) => {
 
   try {
     await resend.emails.send({
-      from: 'onboarding@resend.dev',
+      from: 'Acme <onboarding@resend.dev>',
       to: [email],
       subject: 'The-Heaven Reset-Password Request',
       html: `
