@@ -119,7 +119,7 @@ const account = new Account(client);
       const response = await account.createMagicURLToken(
         ID.unique(), // Generate a unique ID for the magic URL
         formData.email, // Email address for the magic URL
-        "http://localhost:1776" // Redirect to the home route
+        "https://the-heaven-tvd6.vercel.app/" // Redirect to the home route
       );
       alert("Magic URL sent! Please check your email.");
     } catch (err) {
