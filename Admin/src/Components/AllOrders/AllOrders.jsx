@@ -21,7 +21,7 @@ export default function OrderList() {
 
   const fetchOrders = async () => {
     try {
-      const res = await fetch("http://localhost:4000/api/allOrders");
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/allOrders`);
       const data = await res.json();
       if (data.success) setOrders(data.Orders);
     } catch (err) {
@@ -44,7 +44,7 @@ const handleDateChange = async (index, newDate) => {
 
   console.log(orderId,userEmail);
 
-  await fetch("http://localhost:4000/api/updateOrder", {
+  await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/updateOrder`, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -63,7 +63,7 @@ const handleCompletedToggle = async (index) => {
 
   const { orderId, userEmail,deliveredAt } = updatedOrders[index];
 
-  await fetch("http://localhost:4000/api/updateOrder", {
+  await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/updateOrder`, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -78,7 +78,7 @@ const handleCompletedToggle = async (index) => {
   const sendMailToUser = async (order, index) => {
     setSendingMailIndex(index);
     try {
-      const res = await fetch("http://localhost:4000/api/sendMail", {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/sendMail`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

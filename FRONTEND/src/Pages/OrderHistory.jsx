@@ -1,5 +1,4 @@
 
-
 import React, { useEffect, useState } from "react";
 import "./CSS/OrderHistory.css";
 
@@ -11,7 +10,7 @@ const OrderHistory = () => {
   useEffect(() => {
     const fetchOrderHistory = async () => {
       try {
-        const response = await fetch("http://localhost:4000/api/orderHistory", {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/orderHistory`, {
           method: "GET",
           headers: {
             Accept: "application/json",

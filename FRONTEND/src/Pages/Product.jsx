@@ -23,7 +23,7 @@ function Product() {
             }
 
             try {
-                const response = await fetch(`http://localhost:4000/api/checkStock/${productId}`);
+                const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/checkStock/${productId}`);
                 const data = await response.json();
                 if (data.success) {
                     setStockStatus(data.stockStatus);

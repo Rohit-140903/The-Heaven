@@ -20,7 +20,7 @@ function DescriptionBox(props) {
     if (!product?._id) return;
     setLoading(true);
 
-    fetch(`http://localhost:4000/api/comments?productId=${product._id}`)
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/api/comments?productId=${product._id}`)
       .then((response) => response.json())
       .then((data) => {
         setComments(data.comments || []);
@@ -39,7 +39,7 @@ function DescriptionBox(props) {
   const handleCommentSubmit = () => {
     if (!newComment.trim()) return;
 
-    fetch(`http://localhost:4000/api/comments?productId=${product._id}`, {
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/api/comments?productId=${product._id}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

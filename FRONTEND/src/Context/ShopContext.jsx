@@ -27,12 +27,12 @@ const ShopContextProvider = (props) => {
 const [cartItems,setcartItems] = useState(getDefaultCart());
 
 useEffect(() =>{
-  fetch('http://localhost:4000/api/allProducts')
+  fetch(`${import.meta.env.VITE_BACKEND_URL}/api/allProducts`)
   .then((res) => res.json())
   .then((data) => setAll_Product(data));
 
   if(localStorage.getItem('auth-token')){
-    fetch('http://localhost:4000/api/totalcartitems',{
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/api/totalcartitems`,{
       method:'POST',
       headers:{
         Accept:'application/form-data',
@@ -50,7 +50,7 @@ useEffect(() =>{
 // const addToCart = (itemId)=>{
 //   setcartItems((prev) =>({...prev,[itemId] : prev[itemId]+1}))
 //   if(localStorage.getItem('auth-token')){
-//     fetch('http://localhost:4000/api/addtocart',{
+//     fetch('${import.meta.env.VITE_BACKEND_URL}/api/addtocart',{
 //       method:'POST',
 //       headers:{
 //         Accept:'application/form-data',
@@ -73,7 +73,7 @@ const addToCart = (itemId) => {
 
   
   if (localStorage.getItem('auth-token')) {
-    fetch('http://localhost:4000/api/addtocart', {
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/api/addtocart`, {
       method: 'POST',
       headers: {
         Accept: 'application/json', 
@@ -100,7 +100,7 @@ const addToCart = (itemId) => {
 // const removeFromCart = (itemId)=>{
 //   setcartItems((prev)=>({...prev,[itemId]:prev[itemId]-1}));
 //   if(localStorage.getItem('auth-token')){ // if the user is login in that case auth-token will be generated
-//   fetch('http://localhost:4000/removefromcart',{
+//   fetch('${import.meta.env.VITE_BACKEND_URL}/removefromcart',{
 //     method:'POST',
 //     headers:{
 //       Accept:'application/form-data',
@@ -125,7 +125,7 @@ const removeFromCart = (itemId) => {
   });
 
   if (localStorage.getItem("auth-token")) {
-    fetch("http://localhost:4000/api/removefromcart", {
+    fetch(`${import.meta.env.VITE_BACKEND_URL}/api/removefromcart`, {
       method: "POST",
       headers: {
         Accept: "application/json",  // ✅ Corrected header

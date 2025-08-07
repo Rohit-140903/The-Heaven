@@ -56,7 +56,7 @@ function Shop() {
 
       // Send user data to backend
       console.log("Sending session email to backend...");
-      const response = await fetch("http://localhost:4000/api/signup", {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/signup`, {
         method: "POST",
         headers: {
           Accept: "application/json",

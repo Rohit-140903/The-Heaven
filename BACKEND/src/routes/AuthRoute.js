@@ -1,5 +1,5 @@
 const express = require("express");
-const { signup, login,updatePassword,verifyEmailSignup,verifyEmail,clientDetails,adminLogin,adminSignup } = require("../controllers/AuthController");
+const { signup, login,updatePassword,verifyEmailSignup,verifyEmail,clientDetails,adminLogin,adminSignup,ResetPassword } = require("../controllers/AuthController");
 const fetchUser = require("../middleware/AuthMiddleware")
 const router = express.Router();
 
@@ -11,5 +11,6 @@ router.post("/update-password", updatePassword);
 router.post("/verify-email", verifyEmail);
 router.post("/verify-email-signup", verifyEmailSignup);
 router.post("/clientDetails" , fetchUser, clientDetails);
+router.post("/reset-password",ResetPassword);
 
 module.exports = router;

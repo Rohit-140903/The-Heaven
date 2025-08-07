@@ -66,7 +66,7 @@ const Home = ()=>{
         let responseData;
   
           // Fetch the backend to generate token after successful verification
-          fetch('http://localhost:4000/Adminsignup', {
+          fetch('${import.meta.env.VITE_BACKEND_URL}/Adminsignup', {
             method: 'POST',
             headers: {
               Accept: 'application/json',

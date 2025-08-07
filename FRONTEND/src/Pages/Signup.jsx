@@ -46,7 +46,7 @@ function Signup() {
     setLoading(true);
 
     let responseData;
-    await fetch("http://localhost:4000/api/verify-email", {
+    await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/verify-email`, {
       method: "POST",
       headers: {
         Accept: "application/json",

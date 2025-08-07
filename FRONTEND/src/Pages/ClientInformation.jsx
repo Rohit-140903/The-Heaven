@@ -101,7 +101,7 @@ export default function AddressPageCheckout() {
     try {
       const user = localStorage.getItem(import.meta.env.VITE_AUTH_TOKEN);
       const userEmail = user?.email;
-      await fetch("http://localhost:4000/api/clientDetails", {
+      await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/clientDetails`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: userEmail, address }),
@@ -136,7 +136,7 @@ export default function AddressPageCheckout() {
       };
 
       const response = await fetch(
-        "http://localhost:4000/api/create-checkout-session",
+        `${import.meta.env.VITE_BACKEND_URL}/api/create-checkout-session`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

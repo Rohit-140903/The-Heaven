@@ -52,7 +52,7 @@ export default function AddProduct() {
       const formData = new FormData();
       formData.append("product", image);
 
-      const uploadResponse = await fetch("http://localhost:4000/api/upload", {
+      const uploadResponse = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/upload`, {
         method: "POST",
         headers: { Accept: "application/json" },
         body: formData,
@@ -66,7 +66,7 @@ export default function AddProduct() {
           image_public_id: uploadData.imagePublicId,
         };
 
-        const productResponse = await fetch("http://localhost:4000/api/addProduct", {
+        const productResponse = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/addProduct`, {
           method: "POST",
           headers: {
             Accept: "application/json",

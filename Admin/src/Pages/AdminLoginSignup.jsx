@@ -59,7 +59,7 @@ const account = new Account(client);
     setLoading(true); // Start loading spinner
 
     let responseData;
-    await fetch("http://localhost:4000/api/Adminlogin", {
+    await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/Adminlogin`, {
       method: "POST",
       headers: {
         Accept: "application/form-data",
@@ -90,7 +90,7 @@ const account = new Account(client);
     setLoading(true); // Start loading spinner
 
     let responseData;
-    await fetch("http://localhost:4000/api/verify-email-signup", {
+    await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/verify-email-signup`, {
       method: "POST",
       headers: {
         Accept: "application/form-data",

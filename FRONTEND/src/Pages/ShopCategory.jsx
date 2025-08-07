@@ -109,7 +109,7 @@ function ShopCategory (props){
                 if(props.category === item.category){
                 return <Items key = {key} id = {item.id} name = {item.name} image = {item.image} new_price = {item.new_price} old_price = {item.old_price} />
                 
-                /* image = item.image so, item.image = image url which is requested in browser like http://localhost:4000/images/product_1732811665705.jpg 
+                /* image = item.image so, item.image = image url which is requested in browser like ${import.meta.env.VITE_BACKEND_URL}/images/product_1732811665705.jpg 
                 and then show this image to our site */
 
                 }

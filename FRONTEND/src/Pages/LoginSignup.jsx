@@ -36,7 +36,7 @@ function LoginSignup() {
         setLoading(true); // Show loading indicator
 
         let responseData;
-        await fetch('http://localhost:4000/login', {
+        await fetch('${import.meta.env.VITE_BACKEND_URL}/login', {
             method: 'POST',
             headers: {
                 Accept: 'application/form-data',
@@ -67,7 +67,7 @@ function LoginSignup() {
         setLoading(true); 
 
         let responseData;
-        await fetch('http://localhost:4000/signup', {
+        await fetch('${import.meta.env.VITE_BACKEND_URL}/signup', {
             method: 'POST',
             headers: {
                 Accept: 'application/form-data',

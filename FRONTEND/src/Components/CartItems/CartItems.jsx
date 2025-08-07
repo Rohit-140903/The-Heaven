@@ -37,7 +37,7 @@ export default function CartItems() {
 
       try {
         const response = await fetch(
-          "http://localhost:4000/api/checkStockInCart",
+          `${import.meta.env.VITE_BACKEND_URL}/api/checkStockInCart`,
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },

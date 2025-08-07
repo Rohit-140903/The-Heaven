@@ -255,3 +255,44 @@ exports.updatePassword = async (req, res) => {
   }
 };
 
+const nodemailer = require("nodemailer");
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+});
+
+exports.ResetPassword = async(req,res) => {
+
+  const {email} = req.body;
+  const user = await User.findOne({email});
+  console.log("hello",user);
+  const name = User.fullName;
+  const password = user.password;
+
+    const mailOptions = {
+    from: process.env.EMAIL_USER,
+    to: email,
+    subject: "Reset-Password Request",
+    html: `
+      <p>Hello ${name || "Customer"},</p>
+      <p>You have made a Reset-Password request for your account Password on which is <strong>${password}</strong></p>
+      <br/>
+      <p>Thank you for Choosing Us</p>
+    `,
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+    res.json({success: true });
+  } catch (err) {
+    console.error("Error sending email:", err);
+    res.json({ success: false, error: err.message });
+  }
+
+  
+};
+

@@ -10,7 +10,7 @@ function NewCollection() {
     const fetchData = async () => {
       setLoading(true); // Start loading spinner
       try {
-        const response = await fetch("http://localhost:4000/api/newcollections");
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/newcollections`);
         const data = await response.json();
         setNew_Collection(data);
       } catch (error) {

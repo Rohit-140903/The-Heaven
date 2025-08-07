@@ -1,6 +1,4 @@
 
-
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import './CSS/Success.css';
@@ -17,14 +15,14 @@ const Success = () => {
 
     useEffect(() => {
         if (sessionId) {
-            fetch(`http://localhost:4000/api/check-payment-status/${sessionId}`)
+            fetch(`${import.meta.env.VITE_BACKEND_URL}/api/check-payment-status/${sessionId}`)
                 .then((response) => response.json())
                 .then(async (data) => {
                     if (data.success) {
                         console.log("Stock updated successfully!");
                         console.log(data.orderProducts);
 
-                        const orderResponse = await fetch('http://localhost:4000/api/addOrder', {
+                        const orderResponse = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/addOrder`, {
                             method: "POST",
                             headers: {
                                 Accept: "application/form-data",
@@ -63,7 +61,7 @@ const Success = () => {
 
         const checkPayment = async () => {
             try {
-                const response = await fetch(`http://localhost:4000/api/check-payment-status/${sessionId}`);
+                const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/check-payment-status/${sessionId}`);
                 const data = await response.json();
 
                 if (!isMounted) return;
@@ -78,7 +76,7 @@ const Success = () => {
                     console.log("Stock updated successfully!");
                     console.log(data.orderProducts);
 
-                    const orderResponse = await fetch('http://localhost:4000/api/addOrder', {
+                    const orderResponse = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/addOrder`, {
                         method: "POST",
                         headers: {
                             Accept: "application/json",

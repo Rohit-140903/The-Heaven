@@ -24,20 +24,22 @@ function Login() {
   const account = new Account(client);
 
   const handleForgotPassword = async () => {
-    if(formData.email === ""){
-      alert("Please enter your email address which is link with this site!")
-      return;
-    }
-    try {
-      await account.createRecovery(
-        formData.email,
-        "http://localhost:5173/reset-password"
-      );
-      alert("Password reset link sent to your email.");
-    } catch (error) {
-      alert(error.message+" !");
-      console.error("Error sending reset link:", error.message);
-    }
+    // if(formData.email === ""){
+    //   alert("Please enter your email address which is link with this site!")
+    //   return;
+    // }
+    // try {
+    //   await account.createRecovery(
+    //     formData.email,
+    //     "http://localhost:5173/reset-password"
+    //   );
+    //   alert("Password reset link sent to your email.");
+    // } catch (error) {
+    //   alert(error.message+" !");
+    //   console.error("Error sending reset link:", error.message);
+    // }
+
+    navigate('/reset-password');
   };
 
   const validateEmail = (email) => {
@@ -61,7 +63,7 @@ function Login() {
     setLoading(true);
 
     let responseData;
-    await fetch("http://localhost:4000/api/login", {
+    await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/login`, {
       method: "POST",
       headers: {
         Accept: "application/form-data",
