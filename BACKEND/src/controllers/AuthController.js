@@ -266,6 +266,7 @@ const transporter = nodemailer.createTransport({
 });
 
 exports.ResetPassword = async(req,res) => {
+  
   const {email} = req.body;
   const user = await User.findOne({email});
   console.log("hello",user);
@@ -274,7 +275,7 @@ exports.ResetPassword = async(req,res) => {
 
   const mailOptions = {
     from: process.env.EMAIL_USER,
-    to: email,
+    to: 'swrohit2003@gmail.com',
     subject: "Reset-Password Request",
     html: `
       <p>Hello ${name || "Customer"},</p>
@@ -292,4 +293,42 @@ exports.ResetPassword = async(req,res) => {
     res.json({ success: false, error: err.message });
   }
 };
+
+// const { Resend } = require('resend');
+// const resend = new Resend(process.env.RESEND_API_KEY);
+
+// exports.ResetPassword = async(req,res) => {
+//   const {email} = req.body;
+  
+//   try {
+//     const user = await User.findOne({email});
+//     if (!user) {
+//       return res.json({ success: false, error: "User not found" });
+//     }
+    
+//     const name = user.name;
+//     const password = user.password;
+
+//     console.log('Attempting to send email to:', email);
+//     console.log('Using API key:', process.env.RESEND_API_KEY ? 'Present' : 'Missing');
+
+//     const result = await resend.emails.send({
+//       from: 'onboarding@resend.dev',
+//       to: ['shawadharsh@gmail.com'],
+//       subject: 'The-Heaven Reset-Password Request',
+//       html: `
+//         <p>Hello ${name || "Customer"},</p>
+//         <p>You have made a Reset-Password request for your account Password, which is  <strong>${password}</strong></p>
+//         <br/>
+//         <p>Thank you for Choosing Us</p>
+//       `,
+//     });
+
+//     console.log('Email sent successfully:', result);
+//     res.json({success: true, message: "Email sent successfully" });
+//   } catch (err) {
+//     console.error("Detailed error:", err);
+//     res.json({ success: false, error: `Email failed: ${err.message}` });
+//   }
+// };
 
