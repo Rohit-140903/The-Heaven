@@ -512,8 +512,8 @@ exports.buyNow = async (req, res) => {
         },
       ],
       mode: "payment",
-      success_url: `http://localhost:5173/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: "http://localhost:5173/failure",
+      success_url: `https://the-heaven-y1b5.vercel.app/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: "https://the-heaven-y1b5.vercel.app/failure",
       metadata: {
         type: "buy-now",
         cart: JSON.stringify({
