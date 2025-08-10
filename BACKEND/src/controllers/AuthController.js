@@ -127,7 +127,7 @@ exports.verifyEmailSignup = async (req, res) => {
 // User Signup
 exports.signup = async (req, res) => {
   try {
-    const {email} = req.body;
+    const {email} = req.body.email;
     //console.log("Email received for signup:",e\);
 
     // Check if user already exists
