@@ -3,6 +3,14 @@
     width : 100%;
 }
 
+.admin-welcome {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #ff3399;
+  margin-top: 20px;
+}
+
 
 @media(max-width:800px){
     .home{

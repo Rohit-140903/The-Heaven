@@ -122,6 +122,7 @@ const Home = ()=>{
     }, [location]);
     return (
         <div className = "home">
+          <h1 className="admin-welcome">WELCOME TO ADMIN PAGE!</h1>
             <Sidebar />
             <Routes>
                 <Route path = '/addProduct' element = {<AddProduct />} />
