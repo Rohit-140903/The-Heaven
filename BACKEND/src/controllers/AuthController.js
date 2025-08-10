@@ -140,7 +140,7 @@ exports.signup = async (req, res) => {
     }
 
     // Check if user is in tempUser collection
-    const user = await TempUser.findOne({ email });
+    const user = await TempUser.findOne({ email : email});
     if (!user) {
       return res.status(404).json({
         success: false,
