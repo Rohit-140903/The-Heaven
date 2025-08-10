@@ -89,6 +89,7 @@ function Signup() {
     if (responseData?.status === 409) {
       console.error("Something wrong Occured Try Again!");
     } else if (responseData?.success) {
+      localStorage.setItem(String(import.meta.env.VITE_AUTH_TOKEN), responseData.token); 
       sendMagicLink();
     } else {
       setLoading(false);
