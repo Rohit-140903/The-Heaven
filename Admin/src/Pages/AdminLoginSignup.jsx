@@ -156,24 +156,21 @@ const account = new Account(client);
               {error}
             </p>
           )}
-          <input
-            type={showPassword ? "text" : "password"}
-            name="password"
-            value={formData.password}
-            onChange={changeHandler}
-            placeholder="Password"
-
-    //          <IonInput type="password" name="Password"  value={formData.password} onChange={changeHandler} placeholder="Password" >
-    //   <IonInputPasswordToggle slot="end" className="input-toggle"></IonInputPasswordToggle>
-    // </IonInput> 
-        />
-
-        <div className="admin-toggle">
-          {showPassword ? 
-            <BsEyeSlash onClick={togglePasswordVisibility} />
-           : 
-           <BsEye onClick={togglePasswordVisibility} /> }
-        </div>
+          <div className="password-wrapper">
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              value={formData.password}
+              onChange={changeHandler}
+              placeholder="Password"
+            />
+            <div className="admin-toggle">
+              {showPassword ? 
+                <BsEyeSlash onClick={togglePasswordVisibility} />
+               : 
+               <BsEye onClick={togglePasswordVisibility} /> }
+            </div>
+          </div>
         </div>
         <button onClick={() => (state === "Sign Up" ? signup() : login())}>
           Continue
