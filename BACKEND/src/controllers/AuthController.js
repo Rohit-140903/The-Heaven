@@ -1,5 +1,6 @@
 const { User, TempUser } = require("../models/UserModel");
 const { Admin, TempAdmin } = require("../models/AdminModel");
+const Product = require("../models/ProductModel");
 const jwt = require("jsonwebtoken");
 
 exports.clientDetails = async (req,res) => {
@@ -127,7 +128,7 @@ exports.verifyEmailSignup = async (req, res) => {
 // User Signup
 exports.signup = async (req, res) => {
   try {
-    const {email} = req.body.email;
+    const {email} = req.body;
     //console.log("Email received for signup:",e\);
 
     // Check if user already exists
