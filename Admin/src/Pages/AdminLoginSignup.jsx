@@ -93,7 +93,7 @@ const account = new Account(client);
     await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/verify-email-signup`, {
       method: "POST",
       headers: {
-        Accept: "application/form-data",
+        Accept: "application/json",
         "Content-Type": "application/json",
       },
       body: JSON.stringify(formData),
