@@ -122,7 +122,6 @@ const Home = ()=>{
     }, [location]);
     return (
         <div className = "home">
-          <h1 className="admin-welcome">WELCOME TO ADMIN PAGE!</h1>
             <Sidebar />
             <Routes>
                 <Route path = '/addProduct' element = {<AddProduct />} />
@@ -130,7 +129,11 @@ const Home = ()=>{
                 <Route path = '/updateStock' element = {<UpdateStock />} />
                 <Route path = '/allOrders' element = {<AllOrders />} />
             </Routes>
+            <h1 className = "home-txt">WELCOME TO ADMIN PAGE!</h1>
         </div>
+
+        
+
     )
 }
 export default Home;
