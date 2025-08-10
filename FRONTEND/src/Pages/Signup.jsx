@@ -44,7 +44,6 @@ function Signup() {
   const signup = async () => {
     if (!validateEmail(formData.email)) return;
 
-    // ✅ Password check
     if (!formData.password.trim()) {
       setError((prev) => ({
         ...prev,
@@ -89,7 +88,7 @@ function Signup() {
     if (responseData?.status === 409) {
       console.error("Something wrong Occured Try Again!");
     } else if (responseData?.success) {
-      localStorage.setItem(String(import.meta.env.VITE_AUTH_TOKEN), responseData.token); 
+      console.log("Signup successful", responseData);
       sendMagicLink();
     } else {
       setLoading(false);
@@ -97,14 +96,18 @@ function Signup() {
     }
   };
 
+  // sign up called at shop.jsx
+
   const sendMagicLink = async () => {
     try {
       await account.createMagicURLToken(
         ID.unique(),
         formData.email,
-        "https://the-heaven-y1b5.vercel.app/"
+         "https://the-heaven-y1b5.vercel.app/"
+        //"http://localhost:5173"
       );
       alert("Magic URL sent! Please check your email.");
+      //localStorage.setItem("tempUser", formData.email);
     } catch (err) {
       console.error(err);
       alert("Failed to send magic URL.");

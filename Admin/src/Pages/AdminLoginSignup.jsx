@@ -114,6 +114,8 @@ const account = new Account(client);
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // adminsignup calls from home.jsx
+
   const sendMagicLink = async () => {
     try {
       const response = await account.createMagicURLToken(

@@ -50,10 +50,10 @@ exports.verifyEmail = async (req, res) => {
   try {
     // Check if email already exists in the temporary user collection
     const existingTempUser = await TempUser.findOne({ email: user.email });
+    //const existingUser = await User.find({ email: user.email });
 
     if (existingTempUser) {
-      await TempUser.deleteOne({ email: user.email });
-      return res.status(409).json({ success: false, message: "Something went wrong. Try again!" });
+      return res.status(200).json({ success: true, message: "Email already exists in the signing process." });
     }
 
     // Check if the email exists in the main user collection
@@ -92,34 +92,46 @@ exports.verifyEmailSignup = async (req, res) => {
   }
   const admin = req.body;
 
+  const exisitingAdmin = await TempAdmin.findOne({ email: admin.email });
+
+  if (exisitingAdmin) {
+    return res.status(200).json({
+      success: true,  
+      message: "Email already exists in the signing process.",
+    });
+  }
+
   const foundUser = await Admin.findOne({ email: admin.email });
   console.log("foundUser", foundUser);
 
   if (foundUser === null || foundUser === undefined) {
-    const newAdmin = new tempAdmin({
+    const newAdmin = new TempAdmin({
       name: admin.name,
       email: admin.email,
       password: admin.password,
     });
+
     await newAdmin.save();
     return res.status(200).json({
       success: true,
     });
   }
-  await tempAdmin.deleteOne(foundUser);
   return res.status(400).json({
     success: false,
     errors: "Existing Admin found with the same email address",
   });
 };
 
+
+
 // User Signup
 exports.signup = async (req, res) => {
   try {
-    const { email } = req.body;
+    const {email} = req.body;
+    console.log("Email received for signup:",value);
 
     // Check if user already exists
-    let check = await User.findOne({ email });
+    let check = await User.findOne({email : email} );
     if (check) {
       return res.status(400).json({
         success: false,
@@ -128,7 +140,7 @@ exports.signup = async (req, res) => {
     }
 
     // Check if user is in tempUser collection
-    const user = await tempUser.findOne({ email });
+    const user = await TempUser.findOne({ email });
     if (!user) {
       return res.status(404).json({
         success: false,
@@ -154,7 +166,7 @@ exports.signup = async (req, res) => {
     });
 
     await newUser.save();
-    await tempUser.deleteOne({ email: user.email });
+    await TempUser.deleteOne({ email: user.email });
 
     // Create JWT token
     const data = { user: { id: newUser.id } };
@@ -167,6 +179,8 @@ exports.signup = async (req, res) => {
   }
 };
 
+
+
 // Admin Signup
 exports.adminSignup = async (req, res) => {
   let check = await Admin.findOne({ email: req.body.email });
@@ -177,7 +191,7 @@ exports.adminSignup = async (req, res) => {
     });
   }
 
-  const admin = await tempAdmin.findOne({ email: req.body.email });
+  const admin = await TempAdmin.findOne({ email: req.body.email });
 
   const newAdmin = new Admin({
     name: admin.name,
@@ -186,7 +200,7 @@ exports.adminSignup = async (req, res) => {
   });
   await newAdmin.save();
 
-  await tempAdmin.deleteOne(admin);
+  await TempAdmin.deleteOne(admin);
 
   const data = {
     user: {
