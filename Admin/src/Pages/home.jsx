@@ -23,7 +23,7 @@
 import React from "react";
 import "./home.css";
 import Sidebar from "../Components/Sidebar/Sidebar";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route,useLocation } from "react-router-dom";
 import AddProduct from "../Components/AddProduct/AddProduct";
 import ListProduct from "../Components/ListProduct/ListProduct";
 import UpdateStock from "../Components/UpdateStock/UpdateStock";
@@ -35,6 +35,7 @@ import AllOrders from "../Components/AllOrders/AllOrders";
 const Home = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const location = useLocation(); // get current route
 
   const client = new Client()
     .setEndpoint(import.meta.env.VITE_APPWRITE_ENDPOINT)
@@ -82,7 +83,7 @@ const Home = () => {
           if (responseData?.success) {
             console.log(responseData.token);
             localStorage.setItem("token", responseData.token);
-            location.reload();
+            window.location.reload();
           } else {
             setLoading(false);
             setError("Failed to generate token. Please try again.");
@@ -121,9 +122,14 @@ const Home = () => {
   return (
     <div className="home">
       <Sidebar />
-      {location.pathname === "/" && (
-        <h1 className="home-txt">WELCOME TO ADMIN PAGE!</h1>
-      )}
+      {location.pathname === "/" ?
+        <h1 className="home-txt">
+          <span>W</span><span>E</span><span>L</span><span>C</span><span>O</span><span>M</span><span>E</span><span> </span>
+          <span>T</span><span>O</span><span> </span>
+          <span>A</span><span>D</span><span>M</span><span>I</span><span>N</span><span> </span>
+          <span>P</span><span>A</span><span>G</span><span>E</span><span>!</span>
+        </h1> : null
+      }
       <Routes>
         <Route path="/addProduct" element={<AddProduct />} />
         <Route path="/listProduct" element={<ListProduct />} />
