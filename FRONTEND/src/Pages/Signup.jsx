@@ -1,20 +1,21 @@
 
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Client, Account, ID } from "appwrite";
-import { BsEye,BsEyeSlash } from "react-icons/bs";
+import { BsEye, BsEyeSlash } from "react-icons/bs";
 import "./CSS/Signup.css";
 
 function Signup() {
   const [showPassword, setShowPassword] = useState(false);
-  const togglePassword = () => {
-    setShowPassword(!showPassword);
-  };
+  const togglePassword = () => setShowPassword(!showPassword);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
   });
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({ email: "", password: "" });
   const navigate = useNavigate();
@@ -43,6 +44,23 @@ function Signup() {
   const signup = async () => {
     if (!validateEmail(formData.email)) return;
 
+    // ✅ Password check
+    if (!formData.password.trim()) {
+      setError((prev) => ({
+        ...prev,
+        password: "Password is required",
+      }));
+      return;
+    } else if (formData.password.length < 8) {
+      setError((prev) => ({
+        ...prev,
+        password: "Password must be at least 8 characters long",
+      }));
+      return;
+    } else {
+      setError((prev) => ({ ...prev, password: "" }));
+    }
+
     setLoading(true);
 
     let responseData;
@@ -57,7 +75,7 @@ function Signup() {
       .then((res) => res.json())
       .then((data) => {
         responseData = data;
-        console.log("responseData " , responseData);
+        console.log("responseData", responseData);
       })
       .catch((err) => {
         setLoading(false);
@@ -68,10 +86,9 @@ function Signup() {
         }));
       });
 
-      if(responseData.status === 409){
-        console.error("Something wrong Occured Try Again!");
-      }
-    else if (responseData.success) {
+    if (responseData?.status === 409) {
+      console.error("Something wrong Occured Try Again!");
+    } else if (responseData?.success) {
       sendMagicLink();
     } else {
       setLoading(false);
@@ -84,7 +101,7 @@ function Signup() {
       await account.createMagicURLToken(
         ID.unique(),
         formData.email,
-        "http://localhost:5173"
+        "https://the-heaven-y1b5.vercel.app/"
       );
       alert("Magic URL sent! Please check your email.");
     } catch (err) {
@@ -123,21 +140,30 @@ function Signup() {
             placeholder="Email Address"
           />
           {error.email && <p className="error-text">{error.email}</p>}
-          <input
-            type={showPassword ? "text" : "password"}
-            name="password"
-            value={formData.password}
-            onChange={(e) =>
-              setFormData({ ...formData, password: e.target.value })
-            }
-            placeholder="Password"
-          />
-          <div className = "toggle-btn">
-            {showPassword ? <BsEyeSlash onClick={togglePassword}/> : <BsEye onClick={togglePassword}/>}
+
+          {/* Password with Eye Toggle */}
+          <div className="password-wrapper">
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              value={formData.password}
+              onChange={(e) =>
+                setFormData({ ...formData, password: e.target.value })
+              }
+              placeholder="Password"
+            />
+            <div className="toggle-btn">
+              {" "}
+              {showPassword ? (
+                <BsEyeSlash onClick={togglePassword} />
+              ) : (
+                <BsEye onClick={togglePassword} />
+              )}{" "}
+            </div>
           </div>
           {error.password && <p className="error-text">{error.password}</p>}
-
         </div>
+
         <button onClick={signup} disabled={loading}>
           Sign Up
         </button>
@@ -151,4 +177,3 @@ function Signup() {
 }
 
 export default Signup;
-
