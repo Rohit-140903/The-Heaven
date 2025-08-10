@@ -44,7 +44,7 @@ function Login() {
 
   const validateEmail = (email) => {
     const regex =
-      /^[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com|outlook\.com|hotmail\.com|.in)$/;
+      /^[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com|outlook\.com|hotmail\.com)$/;
     if (!regex.test(email)) {
       setError((prev) => ({
         ...prev,
