@@ -28,7 +28,7 @@ function Signup() {
 
   const validateEmail = (email) => {
     const regex =
-      /^[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com|outlook\.com|hotmail\.com)$/;
+      /^[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com|outlook\.com|hotmail\.com|.in)$/;
     if (!regex.test(email)) {
       setError((prev) => ({
         ...prev,
