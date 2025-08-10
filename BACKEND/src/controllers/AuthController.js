@@ -128,7 +128,7 @@ exports.verifyEmailSignup = async (req, res) => {
 exports.signup = async (req, res) => {
   try {
     const {email} = req.body;
-    console.log("Email received for signup:",value);
+    //console.log("Email received for signup:",e\);
 
     // Check if user already exists
     let check = await User.findOne({email : email} );
