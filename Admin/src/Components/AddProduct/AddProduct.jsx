@@ -54,12 +54,16 @@ export default function AddProduct() {
 
       const uploadResponse = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/upload`, {
         method: "POST",
-        headers: { Accept: "application/json" },
+        headers: { 
+          Accept: "application/json" ,
+         "auth-token": token,
+        },
         body: formData,
       });
       const uploadData = await uploadResponse.json();
 
-      if (uploadData.success) {
+
+      if(uploadData.success) {
         const updatedProductDetails = {
           ...productDetails,
           image: uploadData.imageUrl,
@@ -71,6 +75,7 @@ export default function AddProduct() {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
+            "auth-token": token,
           },
           body: JSON.stringify(updatedProductDetails),
         });

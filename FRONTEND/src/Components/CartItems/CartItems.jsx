@@ -40,10 +40,20 @@ export default function CartItems() {
           `${import.meta.env.VITE_BACKEND_URL}/api/checkStockInCart`,
           {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: { 
+              "Content-Type": "application/json",
+              "auth-token": localStorage.getItem("auth-token") || "",
+              Accept: "application/json",
+             },
             body: JSON.stringify({ products: productQuantities }),
           }
         );
+
+        if(response.status === 401) {
+          alert("Please Login First");
+          navigate("/login");
+          return;
+        }
 
         if (!response.ok) throw new Error("Failed to fetch stock status");
 

@@ -23,7 +23,7 @@ const OrderHistory = () => {
         if (response.ok) {
           setOrders(data);
         } else {
-          setError(data.message || "Failed to fetch order history");
+          setError(data.errors || "Failed to fetch order history");
         }
       } catch (err) {
         setError("Something went wrong");

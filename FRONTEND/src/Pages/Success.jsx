@@ -61,7 +61,18 @@ const Success = () => {
 
         const checkPayment = async () => {
             try {
-                const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/check-payment-status/${sessionId}`);
+                const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/check-payment-status/${sessionId}`,{
+                    method: "GET",
+                    headers: {
+                        Accept: "application/json",
+                        "auth-token": localStorage.getItem("auth-token"),
+                        "Content-Type": "application/json",
+                    },
+                });
+
+                if(response.status === 401){
+                    throw new Error("Not a Valid User, Login First!");  
+                }
                 const data = await response.json();
 
                 if (!isMounted) return;

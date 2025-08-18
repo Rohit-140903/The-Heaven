@@ -12,5 +12,6 @@ router.post("/verify-email", verifyEmail);
 router.post("/verify-email-signup", verifyEmailSignup);
 router.post("/clientDetails" , fetchUser, clientDetails);
 router.post("/reset-password",ResetPassword);
+router.get("/check-token", fetchUser);
 
 module.exports = router;

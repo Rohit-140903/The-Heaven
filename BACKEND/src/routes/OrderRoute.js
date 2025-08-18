@@ -7,7 +7,7 @@ const router = express.Router();
 router.post("/addOrder", fetchUser, addOrder);
 router.get("/orderHistory",fetchUser, getOrderHistory);
 router.post("/sendMail",sendMailToUser);
-router.get("/allOrders",findAllOrders);
-router.patch("/updateOrder",updateOrderDetails);
+router.get("/allOrders",fetchUser,findAllOrders);
+router.patch("/updateOrder",fetchUser,updateOrderDetails);
 
 module.exports = router;

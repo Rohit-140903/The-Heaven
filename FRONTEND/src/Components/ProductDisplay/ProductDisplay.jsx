@@ -46,7 +46,21 @@ function ProductDisplay(props) {
       return;
     }
     console.log("buy - now", product);
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/check-token`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("auth-token"),
+      },
+    });
+
+    if(response.status === 401){
+      throw alert("Not a Valid User, Login First!");
+
+    }
+    else if(response.status === 200){
     navigate('/clientInformation-buy-now', { state: { product } });
+    }
   };
 
   const smallImages = [product, product, product, product];

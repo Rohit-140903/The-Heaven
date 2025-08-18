@@ -103,7 +103,11 @@ export default function AddressPageCheckout() {
       const userEmail = user?.email;
       await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/clientDetails`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json" ,
+          "auth-token": localStorage.getItem("auth-token"),
+          
+        },
         body: JSON.stringify({ email: userEmail, address }),
       });
 
@@ -139,7 +143,10 @@ export default function AddressPageCheckout() {
         `${import.meta.env.VITE_BACKEND_URL}/api/create-checkout-session`,
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: { 
+            "Content-Type": "application/json",
+            "auth-token": localStorage.getItem("auth-token")
+          },
           body: JSON.stringify(body),
         }
       );

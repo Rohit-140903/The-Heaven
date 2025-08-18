@@ -10,6 +10,6 @@ router.post("/removefromcart", fetchUser, removeFromCart);
 router.get("/cart", fetchUser, getCartItems);
 router.post("/totalcartitems",fetchUser,totalCartItems);
 router.get("/checkStock/:productId", checkStock);
-router.post("/checkStockInCart", checkStockInCart);
+router.post("/checkStockInCart", fetchUser,checkStockInCart);
 router.post("/updateStock", updateStock);
 module.exports = router;
