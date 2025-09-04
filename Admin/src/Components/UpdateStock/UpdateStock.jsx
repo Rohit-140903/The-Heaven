@@ -39,6 +39,7 @@ export default function UpdateStock() {
         headers: {
           "Accept": "application/json",
           "Content-Type": "application/json",
+          "auth-token": localStorage.getItem(String(import.meta.env.VITE_AUTH_TOKEN))
         },
         body: JSON.stringify({ name: productName, stock: Number(stock) }),
       });

@@ -56,7 +56,7 @@ export default function AddProduct() {
         method: "POST",
         headers: { 
           Accept: "application/json" ,
-         "auth-token": token,
+          "auth-token": localStorage.getItem(String(import.meta.env.VITE_AUTH_TOKEN))
         },
         body: formData,
       });
@@ -75,7 +75,7 @@ export default function AddProduct() {
           headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
-            "auth-token": token,
+            "auth-token": localStorage.getItem(String(import.meta.env.VITE_AUTH_TOKEN))
           },
           body: JSON.stringify(updatedProductDetails),
         });

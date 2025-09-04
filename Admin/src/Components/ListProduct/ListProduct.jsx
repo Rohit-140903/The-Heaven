@@ -23,7 +23,14 @@ export default function ListProduct() {
   const fetchInfo = async () => {
     setLoading(true); // Start loading
     try {
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/allProducts`);
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/allProducts`,{
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          "auth-token": localStorage.getItem(String(import.meta.env.VITE_AUTH_TOKEN))
+        },
+      });
       const data = await res.json();
       setAllProducts(data);
     } catch (error) {
@@ -41,6 +48,7 @@ export default function ListProduct() {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
+          "auth-token": localStorage.getItem(String(import.meta.env.VITE_AUTH_TOKEN))
         },
         body: JSON.stringify({ id: id }),
       });

@@ -1,7 +1,6 @@
-
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import './AllOrders.css';
+import "./AllOrders.css";
 
 export default function OrderList() {
   const [orders, setOrders] = useState([]);
@@ -21,7 +20,17 @@ export default function OrderList() {
 
   const fetchOrders = async () => {
     try {
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/allOrders`);
+      const res = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/allOrders`,
+        {
+          method: "GET",
+          headers: {
+            "auth-token": `${localStorage.getItem(
+              import.meta.env.VITE_AUTH_TOKEN
+            )}`,
+          },
+        }
+      );
       const data = await res.json();
       if (data.success) setOrders(data.Orders);
     } catch (err) {
@@ -31,70 +40,86 @@ export default function OrderList() {
     }
   };
 
+  const handleDateChange = async (index, newDate) => {
+    const updatedOrders = [...orders];
+    updatedOrders[index].deliveredAt = newDate;
+    setOrders(updatedOrders);
 
+    const { orderId, userEmail } = updatedOrders[index];
 
-const handleDateChange = async (index, newDate) => {
-  const updatedOrders = [...orders];
-  updatedOrders[index].deliveredAt = newDate;
-  setOrders(updatedOrders);
+    console.log(updatedOrders[index]);
 
-  const { orderId, userEmail } = updatedOrders[index];
+    console.log(orderId, userEmail);
 
-  console.log(updatedOrders[index]);
+    await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/updateOrder`, {
+      method: "PATCH",
+      headers: {
+        "auth-token": `${localStorage.getItem(
+          import.meta.env.VITE_AUTH_TOKEN
+        )}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        orderId,
+        userEmail,
+        deliveredAt: newDate,
+      }),
+    });
+  };
 
-  console.log(orderId,userEmail);
+  const handleCompletedToggle = async (index) => {
+    const updatedOrders = [...orders];
+    const newStatus = !updatedOrders[index].completed;
+    updatedOrders[index].completed = newStatus;
+    setOrders(updatedOrders);
 
-  await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/updateOrder`, {
-    method: "PATCH",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      orderId,
-      userEmail,
-      deliveredAt: newDate,
-    }),
-  });
-};
+    const { orderId, userEmail, deliveredAt } = updatedOrders[index];
 
-const handleCompletedToggle = async (index) => {
-  const updatedOrders = [...orders];
-  const newStatus = !updatedOrders[index].completed;
-  updatedOrders[index].completed = newStatus;
-  setOrders(updatedOrders);
-
-  const { orderId, userEmail,deliveredAt } = updatedOrders[index];
-
-  await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/updateOrder`, {
-    method: "PATCH",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      orderId,
-      userEmail,
-      deliveredAt,
-      completed: newStatus,
-    }),
-  });
-};
+    await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/updateOrder`, {
+      method: "PATCH",
+      headers: {
+        "auth-token": `${localStorage.getItem(
+          import.meta.env.VITE_AUTH_TOKEN
+        )}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        orderId,
+        userEmail,
+        deliveredAt,
+        completed: newStatus,
+      }),
+    });
+  };
 
   const sendMailToUser = async (order, index) => {
     setSendingMailIndex(index);
     try {
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/sendMail`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: order.userEmail,
-          name: order.address.fullName,
-          product: order.productName,
-          deliveryDate: order.deliveredAt,
-        }),
-      });
+      const res = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/sendMail`,
+        {
+          method: "POST",
+          headers: {
+            "auth-token": `${localStorage.getItem(
+              import.meta.env.VITE_AUTH_TOKEN
+            )}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: order.userEmail,
+            name: order.address.fullName,
+            product: order.productName,
+            deliveryDate: order.deliveredAt,
+          }),
+        }
+      );
 
       const result = await res.json();
-      setToastMessage(result.success
-        ? `Mail sent to ${order.userEmail}`
-        : "Failed to send email");
+      setToastMessage(
+        result.success
+          ? `Mail sent to ${order.userEmail}`
+          : "Failed to send email"
+      );
     } catch (error) {
       console.error("Error sending mail:", error);
       setToastMessage("Error sending email");
@@ -119,20 +144,39 @@ const handleCompletedToggle = async (index) => {
       ) : (
         <div className="inner-orders-container">
           {orders.map((order, index) => (
-            <div key={order._id} className={`order-box ${order.completed ? "order-completed" : ""}`}>
-              <p><strong>OrderId:</strong> {order.orderId}</p>
-              <p><strong>Date:</strong> {new Date(order.date).toLocaleString()}</p>
-              <p><strong>Email:</strong> {order.userEmail}</p>
+            <div
+              key={order._id}
+              className={`order-box ${
+                order.completed ? "order-completed" : ""
+              }`}
+            >
+              <p>
+                <strong>OrderId:</strong> {order.orderId}
+              </p>
+              <p>
+                <strong>Date:</strong> {new Date(order.date).toLocaleString()}
+              </p>
+              <p>
+                <strong>Email:</strong> {order.userEmail}
+              </p>
               <div className="order-address-details">
-                <p><strong>Name:</strong> {order.address.fullName}</p>
-                <p><strong>Phone:</strong> {order.address.phone}</p>
-                <p><strong>City:</strong> {order.address.city}</p>
-                <p><strong>Country:</strong> {order.address.country}</p>
+                <p>
+                  <strong>Name:</strong> {order.address.fullName}
+                </p>
+                <p>
+                  <strong>Phone:</strong> {order.address.phone}
+                </p>
+                <p>
+                  <strong>City:</strong> {order.address.city}
+                </p>
+                <p>
+                  <strong>Country:</strong> {order.address.country}
+                </p>
               </div>
               <p>
                 <strong>Product:</strong> {order.productName} |{" "}
-                <strong>Qty:</strong> {order.quantity} |{" "}
-                <strong>Price:</strong> ${order.price}
+                <strong>Qty:</strong> {order.quantity} | <strong>Price:</strong>{" "}
+                ${order.price}
               </p>
 
               <label>
@@ -140,7 +184,9 @@ const handleCompletedToggle = async (index) => {
                 <input
                   type="date"
                   min={getToday()}
-                  value={order.deliveredAt ? order.deliveredAt.split("T")[0] : ""}
+                  value={
+                    order.deliveredAt ? order.deliveredAt.split("T")[0] : ""
+                  }
                   onChange={(e) => handleDateChange(index, e.target.value)}
                 />
               </label>
@@ -152,7 +198,9 @@ const handleCompletedToggle = async (index) => {
               <label>
                 <input
                   type="checkbox"
-                  checked={order.completed === true || order.completed === "true"}
+                  checked={
+                    order.completed === true || order.completed === "true"
+                  }
                   onChange={() => handleCompletedToggle(index)}
                 />{" "}
                 Mark as Completed
@@ -164,7 +212,9 @@ const handleCompletedToggle = async (index) => {
                 disabled={sendingMailIndex === index}
               >
                 Send Mail
-                {sendingMailIndex === index && <span className="spinner-inline"></span>}
+                {sendingMailIndex === index && (
+                  <span className="spinner-inline"></span>
+                )}
               </button>
             </div>
           ))}
@@ -175,4 +225,3 @@ const handleCompletedToggle = async (index) => {
     </div>
   );
 }
-
