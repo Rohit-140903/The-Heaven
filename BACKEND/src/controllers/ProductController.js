@@ -4,39 +4,61 @@ const fs = require("fs");
 const mongoose = require("mongoose");
 
 // Upload image
+// exports.uploadImage = async (req, res) => {
+//   try {
+//     cloudinary.uploader.upload(req.file.path, async (error, result) => {
+//       if (error) {
+//         return res
+//           .status(500)
+//           .json({ message: "Failed to upload to Cloudinary" });
+//       }
+  
+//       //Get the URL of the uploaded image
+//       const imageUrl = result.secure_url;
+  
+//       //  Delete the file from the local machine
+//       fs.unlink(req.file.path, (err) => {
+//         if (err) {
+//           console.error("Error deleting file from local storage:", err);
+//         } else {
+//           console.log("File deleted from local storage.");
+//         }
+//       });
+  
+//       //console.log(imageUrl);
+  
+//       //  Send response back to frontend with the image URL
+//       res.json({
+//         success: true,
+//         message: "File uploaded and deleted from local storage",
+//         imageUrl,
+//         imagePublicId: result.public_id, // Include public_id
+//       });
+//     });
+//   } catch (error) {
+//     res.status(500).json({ message: "Failed to upload to Cloudinary." });
+//   }
+// };
+
 exports.uploadImage = async (req, res) => {
   try {
-    cloudinary.uploader.upload(req.file.path, async (error, result) => {
-      if (error) {
-        return res
-          .status(500)
-          .json({ message: "Failed to upload to Cloudinary" });
+    const stream = cloudinary.uploader.upload_stream(
+      { folder: "products" },
+      (error, result) => {
+        if (error) return res.status(500).json({ message: error.message });
+
+        res.json({
+          success: true,
+          message: "File uploaded successfully",
+          imageUrl: result.secure_url,
+          imagePublicId: result.public_id,
+        });
       }
-  
-      //Get the URL of the uploaded image
-      const imageUrl = result.secure_url;
-  
-      //  Delete the file from the local machine
-      fs.unlink(req.file.path, (err) => {
-        if (err) {
-          console.error("Error deleting file from local storage:", err);
-        } else {
-          console.log("File deleted from local storage.");
-        }
-      });
-  
-      //console.log(imageUrl);
-  
-      //  Send response back to frontend with the image URL
-      res.json({
-        success: true,
-        message: "File uploaded and deleted from local storage",
-        imageUrl,
-        imagePublicId: result.public_id, // Include public_id
-      });
-    });
+    );
+
+    stream.end(req.file.buffer); // upload from memory
   } catch (error) {
-    res.status(500).json({ message: "Failed to upload to Cloudinary." });
+    res.status(500).json({ message: error.message });
   }
 };
 

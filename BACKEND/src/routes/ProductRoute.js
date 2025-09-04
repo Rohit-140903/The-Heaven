@@ -11,12 +11,16 @@ const {
 } = require("../controllers/ProductController");
 const fetchUser = require("../middleware/AuthMiddleware");
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, "uploads/"),
-  filename: (req, file, cb) => cb(null, Date.now() + "-" + file.originalname),
-});
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => cb(null, "uploads/"),
+//   filename: (req, file, cb) => cb(null, Date.now() + "-" + file.originalname),
+// });
 
+// const upload = multer({ storage });
+
+const storage = multer.memoryStorage();
 const upload = multer({ storage });
+
 
 router.post("/upload", upload.single("product"),fetchUser, uploadImage);
 router.post("/addProduct", upload.single("product"), fetchUser,addProduct);
