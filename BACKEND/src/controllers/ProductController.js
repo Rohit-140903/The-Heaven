@@ -3,7 +3,7 @@ const cloudinary = require("../config/CloudinaryConfig");
 const fs = require("fs");
 const mongoose = require("mongoose");
 
-// Upload image
+// Upload image locally
 // exports.uploadImage = async (req, res) => {
 //   try {
 //     cloudinary.uploader.upload(req.file.path, async (error, result) => {
@@ -39,6 +39,8 @@ const mongoose = require("mongoose");
 //     res.status(500).json({ message: "Failed to upload to Cloudinary." });
 //   }
 // };
+
+// Upload image to Cloudinary directly from memory
 
 exports.uploadImage = async (req, res) => {
   try {

@@ -19,3 +19,10 @@ const fetchUser = async (req, res, next) => {
 };
 
 module.exports = fetchUser;
+
+// how jwt verifies a token:
+
+// 1  Split aaa.bbb.ccc	Identify header, payload, signature
+// 2	Recalculate expectedSignature	Using same algorithm + secret key
+// 3	Compare with ccc	Detect tampering or forgery
+// 4	Decode payload (if valid)	Extract user info, expiry, etc.

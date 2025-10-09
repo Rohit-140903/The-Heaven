@@ -128,7 +128,10 @@ function AddressPageBuyNow() {
         quantity: 1,
       };
 
-      const headers = { "Content-Type": "application/json" };
+      const headers = { 
+        "Content-Type": "application/json",
+        "auth-token": `${localStorage.getItem("auth-token")}`,
+       };
 
       setLoading(true);
 
