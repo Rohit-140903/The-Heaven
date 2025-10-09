@@ -1,6 +1,16 @@
 const express = require("express");
-const { signup, login,updatePassword,verifyEmailSignup,verifyEmail,clientDetails,adminLogin,adminSignup,ResetPassword } = require("../controllers/AuthController");
-const fetchUser = require("../middleware/AuthMiddleware")
+const {
+  signup,
+  login,
+  updatePassword,
+  verifyEmailSignup,
+  verifyEmail,
+  clientDetails,
+  adminLogin,
+  adminSignup,
+  ResetPassword,
+} = require("../controllers/AuthController");
+const fetchUser = require("../middleware/AuthMiddleware");
 const router = express.Router();
 
 router.post("/signup", signup);
@@ -10,8 +20,10 @@ router.post("/Adminlogin", adminLogin);
 router.post("/update-password", updatePassword);
 router.post("/verify-email", verifyEmail);
 router.post("/verify-email-signup", verifyEmailSignup);
-router.post("/clientDetails" , fetchUser, clientDetails);
-router.post("/reset-password",ResetPassword);
-router.get("/check-token", fetchUser);
+router.post("/clientDetails", fetchUser, clientDetails);
+router.post("/reset-password", ResetPassword);
+router.get("/check-token", fetchUser, (req, res) => {
+  res.json({ status : 200, success: true, message: "Token is valid", user: req.user });
+});
 
 module.exports = router;
